@@ -1,4 +1,4 @@
-% ex05_visualize_scores.m
+% ex04_visualize_scores.m
 % GUI で作成した隣接行列から VCS と AECS を計算
 
 clear; clc; close all;
