@@ -1,5 +1,5 @@
 % ex04_edge_weight_sweep.m
-% Sweep one edge weight and visualize how VCS/AECS weights change.
+% 1 本のエッジ重みを変えたときのスコア変化
 
 clear; clc; close all;
 

@@ -1,5 +1,5 @@
 % ex05_visualize_scores.m
-% Build an adjacency matrix with a GUI, add self-loops, and plot scores.
+% GUI で作成した隣接行列から VCS と AECS を計算
 
 clear; clc; close all;
 

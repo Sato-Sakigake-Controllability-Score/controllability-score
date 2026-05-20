@@ -1,8 +1,22 @@
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 # 使用例
 
 この README は，controllability score の使い方をMATLABのコードで順に確認するためのガイドである．
 
-`ex01_*.m` から `ex05_*.m` までのファイルは，ここで説明する使い方をまとまった形で実行できる参考スクリプトとして置いている．
+`ex01_*.m` から `ex04_*.m` までのファイルは，ここで説明する使い方をまとまった形で実行できる参考スクリプトとして置いている．
 
 ## 前提
 
@@ -101,7 +115,7 @@ infoV =
     Trace: []
 ```
 
-個別のプロパティの詳細は, [README.md](../README.md) の「4.6 クラス（`CSResult`）」セクションを参照されたい.
+個別のプロパティの詳細は, [README.md][repo-readme] の「4.6 クラス（`CSResult`）」セクションを参照されたい.
 
 また, 個別関数でも，同じように `info` を受け取れる．
 
@@ -148,7 +162,7 @@ T = 2.0;
     StoreTrace=true);
 ```
 
-オプションの詳細は, [README.md](../README.md) の「4.1.1 通常可制御性スコア用API」セクションを参照されたい.
+オプションの詳細は, [README.md][repo-readme] の「4.1.1 通常可制御性スコア用API」セクションを参照されたい.
 
 また, `UseScaling` は $A$ 行列が不安定な場合でも計算できるようにするオプションである. 一方で, ジョルダン標準形を計算するため, 固有値が重複している場合にはエラーが出る場合があることに注意が必要である.
 
@@ -159,15 +173,14 @@ T = 2.0;
 
 | File | 内容 |
 | --- | --- |
-| `ex01_minimal_bothcs.m` | `vcs`，`aecs`，`bothcs` の基本と solver 情報の確認 |
-| `ex02_finite_horizon.m` | 複数の有限時間ホライズン `T` によるスコア比較 |
-| `ex03_edge_weight_sweep.m` | 1 本のエッジ重みを変えたときのスコア変化 |
-| `ex04_visualize_scores.m` | GUI で作成した隣接行列から VCS と AECS を計算 |
+| [`ex01_minimal_bothcs.m`][ex01] | `vcs`，`aecs`，`bothcs` の基本と solver 情報の確認 |
+| [`ex02_finite_horizon.m`][ex02] | 複数の有限時間ホライズン `T` によるスコア比較 |
+| [`ex03_edge_weight_sweep.m`][ex03] | 1 本のエッジ重みを変えたときのスコア変化 |
+| [`ex04_visualize_scores.m`][ex04] | GUI で作成した隣接行列から VCS と AECS を計算 |
 
-```matlab
-run("examples/ex01_minimal_bothcs.m")
-run("examples/ex02_finite_horizon.m")
-run("examples/ex03_edge_weight_sweep.m")
-run("examples/ex04_visualize_scores.m")
-```
 
+[repo-readme]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/README.md
+[ex01]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex01_minimal_bothcs.m
+[ex02]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex02_finite_horizon.m
+[ex03]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex03_edge_weight_sweep.m
+[ex04]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex04_visualize_scores.m
