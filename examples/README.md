@@ -1,20 +1,173 @@
 # 使用例
 
-このディレクトリには，controllability score を計算するための MATLAB 使用例を配置する．
+この README は，controllability score の使い方をMATLABのコードで順に確認するためのガイドである．
 
-各 example ファイルは，リポジトリのルートディレクトリからそのまま実行できる MATLAB スクリプトとして実装している．
+`ex01_*.m` から `ex05_*.m` までのファイルは，ここで説明する使い方をまとまった形で実行できる参考スクリプトとして置いている．
 
-## 基本例
+## 前提
 
-- `ex01_minimal_bothcs.m`: `bothcs` によって VCS と AECS を同時に計算する例. `vcs`，`aecs`，`bothcs` の使い分けを比較や, `infoV` と `infoA` に格納される計算結果の確認も含む
-- `ex02_finite_horizon.m`: 有限時間ホライズン `T` を指定する例
-- `ex03_options_lyap_integral.m`: Gramian の計算方法を比較する例
+- MATLAB R2024a 以降
+- Control System Toolbox
+- リポジトリのルートディレクトリから実行する
+- `figure` や GUI を使うコードでは，MATLAB の GUI 表示環境が必要
 
-## 実験例
+サンプルスクリプトを実行する場合は，次のようにリポジトリのルートから呼び出す．
 
-- `ex04_edge_weight_sweep.m`: 1本のエッジ重みを変化させ，スコアの変化を可視化する例
-- `ex05_visualize_scores.m`: GUI で作成した隣接行列に自己ループを加え，VCS と AECS の重みを出力・プロットする例
+```matlab
+run("examples/ex01_minimal_bothcs.m")
+```
 
-## 注意
+## 1. システム行列を用意する
 
-MATLAB が本プロジェクトの関数を見つけられるように，使用例はリポジトリのルートディレクトリから実行する．
+基本 API は，システム行列 `A` を受け取ってノードごとの重みを返す．
+
+```matlab
+% 簡単な対角行列の例
+A = diag([-1.0, -2.0, 0.5, 1.2]);
+```
+
+一般には，`A` の行と列がノードに対応する正方行列であればよく, 次のようなバリエーションが考えられる.
+
+- ネットワークの隣接行列 $A$ をそのままシステム行列にする
+- 安定化のために, 対角成分(自己ループに対応する)を足して, $A - cI$ の形にする
+- ラプラシアン $L = D - A$ を計算して, $-L$ をシステム行列とする
+
+```matlab
+adjacency = [ ...
+    0.0, 0.8, 0.0; ...
+    0.0, 0.0, 0.4; ...
+    0.2, 0.0, 0.0];
+
+% 自己ループを加えた例
+selfLoopWeight = 2.0;
+A1 = adjacency - selfLoopWeight * eye(size(adjacency, 1));
+
+% ラプラシアンの例
+degree = sum(adjacency, 2);
+L = diag(degree) - adjacency;
+A2 = -L;
+```
+
+## 2. VCS と AECS を同時に計算する
+
+VCS と AECS の両方を使う場合は，`bothcs` を使うのが基本である．
+
+```matlab
+[pV, pA] = bothcs(A);
+```
+
+`pV` と `pA` は，それぞれノードごとの重みベクトルである．
+
+```matlab
+disp("VCS weights:");
+disp(pV);
+
+disp("AECS weights:");
+disp(pA);
+```
+
+VCS だけ，または AECS だけが必要な場合は，個別の関数も使える．
+
+```matlab
+pV = vcs(A);
+pA = aecs(A);
+```
+
+ただし, `bothcs(A)` は, アルゴリズムの最初に$W_1,\ldots,W_n$を一度に計算し，それをもとにVCSとAECSを計算するため，両方を用いる場合は, `vcs(A)`，`aecs(A)`を順に呼び出すよりも`bothcs(A)`を呼び出す方が効率的である．
+
+## 3. solver の情報を確認する
+
+計算結果の重みだけでなく，最適化の状態も確認したい場合は，追加の出力を受け取ることができる.
+
+```matlab
+[pV, pA, infoV, infoA] = bothcs(A);
+```
+
+例えば, `infoV` は `CSResult` オブジェクトで，次のようなプロパティを持つ．
+```matlab
+infoV = 
+    ObjectiveValue: 8.5001  % 目的関数値
+    Gradient: [4×1 double] 
+    GradNorm: 8 
+    StepNorm: 0
+    Iterations: 1   % 反復回数
+    FuncCount: 3
+    Converged: 1
+    ExitFlag: 1
+    ExitMessage: "Step norm below Tol."
+    Algorithm: "ProjectedGradient (Armijo, projection arc)"
+    SolverOptions: [1×1 ProjectedGradientSolver]
+    ProblemInfo: [1×1 struct]
+    Trace: []
+```
+
+個別のプロパティの詳細は, [README.md](../README.md) の「4.6 クラス（`CSResult`）」セクションを参照されたい.
+
+また, 個別関数でも，同じように `info` を受け取れる．
+
+```matlab
+[pV, infoV] = vcs(A);
+[pA, infoA] = aecs(A);
+```
+
+## 4. 有限時間ホライズンを指定する
+
+既定では `T = inf` として扱われるが, 有限時間のスコアを計算したい場合は，第2引数または `T=...` で終端時刻を指定する．
+
+```matlab
+T = 2.0;
+[pV, pA] = bothcs(A, T);
+```
+
+Name-Value 形式でも同じ指定ができる．
+
+```matlab
+[pV, pA] = bothcs(A, T=2.0);
+```
+
+## 5. そのほかのオプションを指定する
+
+前節の有限時間ホライズンの指定だけでなく, そのほかのオプションも Name-Value 形式で指定できる．
+
+- Gramian 側の主な指定: `Method`, `Steps`, `UseScaling`
+- solver 側の主な指定: `MaxIter`, `Tol`, `Verbose`, `StoreTrace`
+
+例えば, オプションをまとめて指定した例を示す．
+
+```matlab
+T = 2.0;
+
+[pV, pA, infoV, infoA] = bothcs( ...
+    A, T, ...
+    Method="integral", ...
+    Steps=80, ...
+    UseScaling=false, ...
+    MaxIter=2000, ...
+    Tol=1e-9, ...
+    Verbose=true, ...
+    StoreTrace=true);
+```
+
+オプションの詳細は, [README.md](../README.md) の「4.1.1 通常可制御性スコア用API」セクションを参照されたい.
+
+また, `UseScaling` は $A$ 行列が不安定な場合でも計算できるようにするオプションである. 一方で, ジョルダン標準形を計算するため, 固有値が重複している場合にはエラーが出る場合があることに注意が必要である.
+
+
+## 6. サンプルスクリプトを実行する
+
+まとまった例として実行したい場合は，次のスクリプトを使う．README の各節は，これらのスクリプトを読むときの見取り図としても使える．
+
+| File | 内容 |
+| --- | --- |
+| `ex01_minimal_bothcs.m` | `vcs`，`aecs`，`bothcs` の基本と solver 情報の確認 |
+| `ex02_finite_horizon.m` | 複数の有限時間ホライズン `T` によるスコア比較 |
+| `ex03_edge_weight_sweep.m` | 1 本のエッジ重みを変えたときのスコア変化 |
+| `ex04_visualize_scores.m` | GUI で作成した隣接行列から VCS と AECS を計算 |
+
+```matlab
+run("examples/ex01_minimal_bothcs.m")
+run("examples/ex02_finite_horizon.m")
+run("examples/ex03_edge_weight_sweep.m")
+run("examples/ex04_visualize_scores.m")
+```
+
