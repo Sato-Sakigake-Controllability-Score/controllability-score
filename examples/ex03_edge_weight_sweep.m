@@ -1,4 +1,4 @@
-% ex04_edge_weight_sweep.m
+% ex03_edge_weight_sweep.m
 % 1 本のエッジ重みを変えたときのスコア変化
 
 clear; clc; close all;
