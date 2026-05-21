@@ -42,10 +42,7 @@ function varargout = solveVcs(obj, varargin)
     [p, info] = solver.solve(@(x)obj.fVcs(x), obj.InitialGuess);
 
     if isprop(info, "ProblemInfo")
-        info.ProblemInfo = struct( ...
-                                  "Objective", "VCS", ...
-                                  "Dimension", obj.Dimension, ...
-                                  "TargetNodes", obj.TargetNodes);
+        info.ProblemInfo = struct("Objective", "VCS", "Dimension", obj.Dimension);
     end
 
     switch nargout

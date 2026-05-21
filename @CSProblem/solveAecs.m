@@ -42,10 +42,7 @@ function varargout = solveAecs(obj, varargin)
     [p, info] = solver.solve(@(x)obj.fAecs(x), obj.InitialGuess);
 
     if isprop(info, "ProblemInfo")
-        info.ProblemInfo = struct( ...
-                                  "Objective", "AECS", ...
-                                  "Dimension", obj.Dimension, ...
-                                  "TargetNodes", obj.TargetNodes);
+        info.ProblemInfo = struct("Objective", "AECS", "Dimension", obj.Dimension);
     end
 
     switch nargout

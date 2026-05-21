@@ -1,6 +1,5 @@
 % +cscore/+gramian/finLyapNoscale_.m
 function wlist = finLyapNoscale_(A, T, wopts)
-    n = size(A, 1);
     eAT = expm(T * A);
 
     W = cell(n, 1);

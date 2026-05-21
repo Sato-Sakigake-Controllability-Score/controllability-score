@@ -5,7 +5,7 @@ function varargout = vcs(A, varargin)
     %   [p,info] = vcs(A,T,...)
     %
     %   Supported names:
-    %       T, TargetNodes, CSOptions, WOptions, PGSolverOptions
+    %       T, CSOptions, WOptions, PGSolverOptions
     %       plus WOptions properties: Method, Steps, UseScaling, EigTol
     %       plus PGSolverOptions properties: StepSize, StepSizeInf, MaxIter,
     %       Tol, Rho, Sigma, Verbose, StorTrace
@@ -41,7 +41,6 @@ function varargout = vcs(A, varargin)
 
     % Core objects
     addParameter(parser, 'T', [], @(v) isempty(v) || (isnumeric(v) && isscalar(v)));
-    addParameter(parser, 'TargetNodes', [], @(v) isempty(v) || (isnumeric(v) && isvector(v)));
     addParameter(parser, 'CSOptions', CSOptions, @(v) isa(v, 'CSOptions') && isscalar(v));
     addParameter(parser, 'WOptions', [], @(v) isempty(v) || (isa(v, 'WOptions') && isscalar(v)));
     addParameter(parser, 'SolverOptions', [], @(v) isempty(v) || (isa(v, 'PGSolverOptions') && isscalar(v)));
@@ -131,7 +130,7 @@ function varargout = vcs(A, varargin)
     end
 
     % ---- Build problem using WOptions only ----
-    prob = CSProblem(A, T, "WOptions", csopts.WOptions, "TargetNodes", r.TargetNodes);
+    prob = CSProblem(A, T, "WOptions", csopts.WOptions);
 
     % ---- Solve ----
     [p, info] = prob.solveVcs(csopts.SolverOptions);
