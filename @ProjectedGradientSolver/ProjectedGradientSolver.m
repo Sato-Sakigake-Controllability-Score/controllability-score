@@ -1,55 +1,56 @@
 classdef ProjectedGradientSolver
-%PROJECTEDGRADIENTSOLVER Projected gradient method with Armijo backtracking.
-%
-%   This solver minimizes a differentiable objective over the standard
-%   simplex.
-%
-%   Required function signature:
-%       [f,g] = fun(p)
-%   where:
-%       f is a scalar objective value (Inf allowed),
-%       g is a gradient vector (NaN entries allowed to signal invalidity).
-%
-%   Exit flags:
-%       1 Converged: step norm <= Tol
-%       0 Maximum number of iterations reached
-%      -1 Armijo backtracking failed (alpha < StepSizeInf)
-%      -2 Initial point evaluation failed
-%      -3 Accepted point evaluation failed during iteration
-%
-%   Algorithm (projection arc):
-%     - Trial point:   pTilde = csutil.projectOntoSimplex(p - alpha*g)
-%     - Armijo test:   f(pTilde) <= f(p) + Sigma * g'*(pTilde - p)
-%     - Backtracking:  alpha <- Rho*alpha
-%     - See Sato and Terasaki (2024)
-%
-%   Stopping:
-%     - StepNorm = norm(pNew - p,2) <= Tol
-%     - Backtracking fails if alpha < StepSizeInf
-%
-%   Usage:
-%     solver = ProjectedGradientSolver(opts);
-%     [p, info] = solver.solve(@(x)prob.fAecs(x), p0);
+    % PROJECTEDGRADIENTSOLVER Projected gradient method with Armijo backtracking.
+    %
+    %   This solver minimizes a differentiable objective over the standard
+    %   simplex.
+    %
+    %   Required function signature:
+    %       [f,g] = fun(p)
+    %   where:
+    %       f is a scalar objective value (Inf allowed),
+    %       g is a gradient vector (NaN entries allowed to signal invalidity).
+    %
+    %   Exit flags:
+    %       1 Converged: step norm <= Tol
+    %       0 Maximum number of iterations reached
+    %      -1 Armijo backtracking failed (alpha < StepSizeInf)
+    %      -2 Initial point evaluation failed
+    %      -3 Accepted point evaluation failed during iteration
+    %
+    %   Algorithm (projection arc):
+    %     - Trial point:   pTilde = csutil.projectOntoSimplex(p - alpha*g)
+    %     - Armijo test:   f(pTilde) <= f(p) + Sigma * g'*(pTilde - p)
+    %     - Backtracking:  alpha <- Rho*alpha
+    %     - See Sato and Terasaki (2024)
+    %
+    %   Stopping:
+    %     - StepNorm = norm(pNew - p,2) <= Tol
+    %     - Backtracking fails if alpha < StepSizeInf
+    %
+    %   Usage:
+    %     solver = ProjectedGradientSolver(opts);
+    %     [p, info] = solver.solve(@(x)prob.fAecs(x), p0);
 
     properties (SetAccess = private)
-        StepSize      (1,1) double = 0.1
-        MaxIter       (1,1) double = 1000
-        Tol           (1,1) double = 1.0e-8
+        StepSize      (1, 1) double = 0.1
+        MaxIter       (1, 1) double = 1000
+        Tol           (1, 1) double = 1.0e-8
 
         % Armijo parameters:
         %   Rho   : backtracking shrinkage factor in (0,1)
         %   Sigma : sufficient decrease constant in (0,1)
-        Rho           (1,1) double = 0.5
-        Sigma         (1,1) double = 1.0e-4
+        Rho           (1, 1) double = 0.5
+        Sigma         (1, 1) double = 1.0e-4
 
         % Minimum acceptable trial step size; stop if alpha < StepSizeInf.
-        StepSizeInf   (1,1) double = 1.0e-12
+        StepSizeInf   (1, 1) double = 1.0e-12
 
-        Verbose       (1,1) logical = false
-        StoreTrace    (1,1) logical = false
+        Verbose       (1, 1) logical = false
+        StoreTrace    (1, 1) logical = false
     end
 
     methods
+
         function obj = ProjectedGradientSolver(options)
             % options: PGSolverOptions or struct with the same field names.
             if nargin == 0 || isempty(options)
@@ -67,22 +68,38 @@ classdef ProjectedGradientSolver
                 end
             end
 
-            if isfield(s,'StepSize')    && ~isempty(s.StepSize),    obj.StepSize = s.StepSize; end
-            if isfield(s,'MaxIter')     && ~isempty(s.MaxIter),     obj.MaxIter = s.MaxIter; end
-            if isfield(s,'Tol')         && ~isempty(s.Tol),         obj.Tol = s.Tol; end
-            if isfield(s,'Rho')         && ~isempty(s.Rho),         obj.Rho = s.Rho; end
-            if isfield(s,'Sigma')       && ~isempty(s.Sigma),       obj.Sigma = s.Sigma; end
-            if isfield(s,'StepSizeInf') && ~isempty(s.StepSizeInf), obj.StepSizeInf = s.StepSizeInf; end
-            if isfield(s,'Verbose')     && ~isempty(s.Verbose),     obj.Verbose = logical(s.Verbose); end
-            if isfield(s,'StoreTrace')  && ~isempty(s.StoreTrace),  obj.StoreTrace = logical(s.StoreTrace); end
+            if isfield(s, 'StepSize')    && ~isempty(s.StepSize)
+                obj.StepSize = s.StepSize;
+            end
+            if isfield(s, 'MaxIter')     && ~isempty(s.MaxIter)
+                obj.MaxIter = s.MaxIter;
+            end
+            if isfield(s, 'Tol')         && ~isempty(s.Tol)
+                obj.Tol = s.Tol;
+            end
+            if isfield(s, 'Rho')         && ~isempty(s.Rho)
+                obj.Rho = s.Rho;
+            end
+            if isfield(s, 'Sigma')       && ~isempty(s.Sigma)
+                obj.Sigma = s.Sigma;
+            end
+            if isfield(s, 'StepSizeInf') && ~isempty(s.StepSizeInf)
+                obj.StepSizeInf = s.StepSizeInf;
+            end
+            if isfield(s, 'Verbose')     && ~isempty(s.Verbose)
+                obj.Verbose = logical(s.Verbose);
+            end
+            if isfield(s, 'StoreTrace')  && ~isempty(s.StoreTrace)
+                obj.StoreTrace = logical(s.StoreTrace);
+            end
 
             obj = obj.validateOptions_();
         end
 
         function [p, info] = solve(obj, fun, p0)
-            %SOLVE Run projected gradient method with Armijo backtracking.
+            % SOLVE Run projected gradient method with Armijo backtracking.
 
-            validateattributes(p0, {'double'}, {'vector','real','finite'}, 'solve', 'p0');
+            validateattributes(p0, {'double'}, {'vector', 'real', 'finite'}, 'solve', 'p0');
 
             % Initial projection
             p = csutil.projectOntoSimplex(p0(:));
@@ -94,12 +111,12 @@ classdef ProjectedGradientSolver
             gp = gp(:);
             if numel(gp) ~= numel(p)
                 [p, info] = obj.makeResult_(p, fp, gp, 0, funcCount, false, ...
-                    -2, 'Initial point gradient has incompatible size.', NaN, []);
+                                            -2, 'Initial point gradient has incompatible size.', NaN, []);
                 return
             end
             if ~isfinite(fp) || any(isnan(gp))
                 [p, info] = obj.makeResult_(p, fp, gp, 0, funcCount, false, ...
-                    -2, 'Initial point evaluation failed.', NaN, []);
+                                            -2, 'Initial point evaluation failed.', NaN, []);
                 return
             end
 
@@ -167,7 +184,6 @@ classdef ProjectedGradientSolver
                     break
                 end
 
-
                 stepNorm = norm(p - pPrev, 2);
 
                 if obj.StoreTrace
@@ -176,7 +192,7 @@ classdef ProjectedGradientSolver
 
                 if obj.Verbose
                     fprintf('Iter %4d  f=% .6e  step=% .3e  alpha=% .3e\n', ...
-                        iter, fp, stepNorm, alpha);
+                            iter, fp, stepNorm, alpha);
                 end
 
                 % Stop by update size
@@ -194,18 +210,26 @@ classdef ProjectedGradientSolver
             end
 
             [p, info] = obj.makeResult_(p, fp, gp, iter, funcCount, converged, ...
-                exitFlag, exitMessage, stepNorm, trace);
+                                        exitFlag, exitMessage, stepNorm, trace);
         end
+
     end
 
     methods (Access = private)
+
         function obj = validateOptions_(obj)
-            validateattributes(obj.StepSize,    {'double'}, {'scalar','real','finite','positive'}, 'ProjectedGradientSolver','StepSize');
-            validateattributes(obj.MaxIter,     {'double'}, {'scalar','real','finite','integer','positive'}, 'ProjectedGradientSolver','MaxIter');
-            validateattributes(obj.Tol,         {'double'}, {'scalar','real','finite','nonnegative'}, 'ProjectedGradientSolver','Tol');
-            validateattributes(obj.Rho,         {'double'}, {'scalar','real','finite','>',0,'<',1}, 'ProjectedGradientSolver','Rho');
-            validateattributes(obj.Sigma,       {'double'}, {'scalar','real','finite','>',0,'<',1}, 'ProjectedGradientSolver','Sigma');
-            validateattributes(obj.StepSizeInf, {'double'}, {'scalar','real','finite','positive'}, 'ProjectedGradientSolver','StepSizeInf');
+            validateattributes(obj.StepSize, {'double'}, {'scalar', 'real', 'finite', 'positive'}, ...
+                               'ProjectedGradientSolver', 'StepSize');
+            validateattributes(obj.MaxIter, {'double'}, {'scalar', 'real', 'finite', 'integer', 'positive'}, ...
+                               'ProjectedGradientSolver', 'MaxIter');
+            validateattributes(obj.Tol, {'double'}, {'scalar', 'real', 'finite', 'nonnegative'}, ...
+                               'ProjectedGradientSolver', 'Tol');
+            validateattributes(obj.Rho, {'double'}, {'scalar', 'real', 'finite', '>', 0, '<', 1}, ...
+                               'ProjectedGradientSolver', 'Rho');
+            validateattributes(obj.Sigma, {'double'}, {'scalar', 'real', 'finite', '>', 0, '<', 1}, ...
+                               'ProjectedGradientSolver', 'Sigma');
+            validateattributes(obj.StepSizeInf, {'double'}, {'scalar', 'real', 'finite', 'positive'}, ...
+                               'ProjectedGradientSolver', 'StepSizeInf');
         end
 
         function [f, funcCount] = evalF_(~, fun, p, funcCount)
@@ -213,36 +237,36 @@ classdef ProjectedGradientSolver
                 f = fun(p);
             catch ME
                 error('ProjectedGradientSolver:InvalidObjectiveHandle', ...
-                    'fun must support one output: f = fun(p). (%s)', ME.message);
+                      'fun must support one output: f = fun(p). (%s)', ME.message);
             end
             funcCount = funcCount + 1;
         end
 
-        function [f,g, funcCount] = evalFG_(~, fun, p, funcCount)
+        function [f, g, funcCount] = evalFG_(~, fun, p, funcCount)
             try
-                [f,g] = fun(p);
+                [f, g] = fun(p);
             catch ME
                 error('ProjectedGradientSolver:InvalidObjectiveHandle', ...
-                    'fun must support two outputs: [f,g] = fun(p). (%s)', ME.message);
+                      'fun must support two outputs: [f,g] = fun(p). (%s)', ME.message);
             end
             funcCount = funcCount + 1;
         end
 
         function trace = initTrace_(~)
             trace = struct();
-            trace.Iteration  = zeros(0,1);
-            trace.Fval       = zeros(0,1);
-            trace.StepNorm   = zeros(0,1);
-            trace.Alpha      = zeros(0,1);
-            trace.FuncCount  = zeros(0,1);
+            trace.Iteration  = zeros(0, 1);
+            trace.Fval       = zeros(0, 1);
+            trace.StepNorm   = zeros(0, 1);
+            trace.Alpha      = zeros(0, 1);
+            trace.FuncCount  = zeros(0, 1);
         end
 
         function trace = appendTrace_(~, trace, iter, fval, stepNorm, alpha, funcCount)
-            trace.Iteration(end+1,1) = iter;
-            trace.Fval(end+1,1)      = fval;
-            trace.StepNorm(end+1,1)  = stepNorm;
-            trace.Alpha(end+1,1)     = alpha;
-            trace.FuncCount(end+1,1) = funcCount;
+            trace.Iteration(end + 1, 1) = iter;
+            trace.Fval(end + 1, 1)      = fval;
+            trace.StepNorm(end + 1, 1)  = stepNorm;
+            trace.Alpha(end + 1, 1)     = alpha;
+            trace.FuncCount(end + 1, 1) = funcCount;
         end
 
         function [p, info] = makeResult_(obj, p, fval, grad, iters, funcCount, converged, ...
@@ -269,5 +293,6 @@ classdef ProjectedGradientSolver
                 end
             end
         end
+
     end
 end

@@ -12,22 +12,22 @@ function wlist = finIntegralNoscale_(A, T, wopts)
     W = cell(n, 1);
 
     eAt = expm(T * A);
-    for i = 1 : n
+    for i = 1:n
         W{i} = {zeros(n, n)};
         W{i}{1}(i, i) = 1 / 3 * dt;
         W{i}{1} = W{i}{1} + 1 / 3 * dt * eAt(:, i) * eAt(:, i).';
     end
 
-    for k = 1 : steps - 1
+    for k = 1:steps - 1
         t = k * dt;
         eAt = expm(t * A);
 
         if mod(k, 2) == 0
-            for i = 1 : n
+            for i = 1:n
                 W{i}{1} = W{i}{1} + 2 / 3 * dt * eAt(:, i) * eAt(:, i).';
             end
         else
-            for i = 1 : n
+            for i = 1:n
                 W{i}{1} = W{i}{1} + 4 / 3 * dt * eAt(:, i) * eAt(:, i).';
             end
         end

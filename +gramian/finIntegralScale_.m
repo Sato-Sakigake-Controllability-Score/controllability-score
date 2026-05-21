@@ -11,9 +11,9 @@ function wlist = finIntegralScale_(A, T, wopts)
     nS = blockSizes(1);
     nI = blockSizes(2);
     nU = blockSizes(3);
-    idxS = 1 : nS;
-    idxI = nS + 1 : nS + nI;
-    idxU = nS + nI + 1 : n;
+    idxS = 1:nS;
+    idxI = nS + 1:nS + nI;
+    idxU = nS + nI + 1:n;
 
     if mod(wopts.Steps, 2) == 0
         steps = wopts.Steps;
@@ -22,13 +22,12 @@ function wlist = finIntegralScale_(A, T, wopts)
     end
     dt = T / steps;
 
-   
     W = cell(n, 1);
-    for i = 1 : n
+    for i = 1:n
         W{i} = {zeros(n, n)};
     end
 
-    for k = 0 : steps
+    for k = 0:steps
         t = k * dt;
         if k == 0 || k == steps
             weight = 1 / 3 * dt;
@@ -42,28 +41,27 @@ function wlist = finIntegralScale_(A, T, wopts)
             eASt = expm(t * blocks{1});
         end
         if ~isempty(idxI)
-            eAIt = 1/sqrt(T) * expm(t * blocks{2});
+            eAIt = 1 / sqrt(T) * expm(t * blocks{2});
         end
         if ~isempty(idxU)
-            emAUt = expm(-(T-t) * blocks{3});
+            emAUt = expm(-(T - t) * blocks{3});
         end
 
-
-        for i = 1 : n
+        for i = 1:n
             % --- left half plane ---
             if ~isempty(idxS)
                 QinviS = Qinv(idxS, i);
                 eAStQinviS = eASt * QinviS;
                 W{i}{1}(idxS, idxS) = W{i}{1}(idxS, idxS) + weight * (eAStQinviS * eAStQinviS.');
             end
-    
+
             % --- imaginary axis ---
             if ~isempty(idxI)
                 QinviI = Qinv(idxI, i);
                 eAItQinviI = eAIt * QinviI;
                 W{i}{1}(idxI, idxI) = W{i}{1}(idxI, idxI) + weight * (eAItQinviI * eAItQinviI.');
             end
-    
+
             % --- right half plane ---
             if ~isempty(idxU)
                 QinviU = Qinv(idxU, i);
@@ -89,25 +87,23 @@ function wlist = finIntegralScale_(A, T, wopts)
         end
     end
 
-
-    for i = 1 : n
+    for i = 1:n
         % --- cross terms ---
         % --- left half plane and imaginary axis ---
         if ~isempty(idxS) && ~isempty(idxI)
             W{i}{1}(idxI, idxS) = W{i}{1}(idxS, idxI).';
         end
-    
+
         % --- imaginary axis and right half plane ---
         if ~isempty(idxI) && ~isempty(idxU)
             W{i}{1}(idxU, idxI) = W{i}{1}(idxI, idxU).';
         end
-    
+
         % --- left half plan and right half plane ---
         if ~isempty(idxS) && ~isempty(idxU)
             W{i}{1}(idxU, idxS) = W{i}{1}(idxS, idxU).';
         end
     end
-
 
     if isempty(idxU)
         emAUT = speye(0);

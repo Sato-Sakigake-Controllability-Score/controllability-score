@@ -1,27 +1,27 @@
 function [f, g] = evalAecs(obj, p)
-%EVALAECS Evaluate AECS objective and optionally its gradient.
-%   f = evalAecs(obj,p) computes the AECS objective value only.
-%   [f,g] = evalAecs(obj,p) computes the objective and its gradient.
-%
-%   AECS (blockwise):
-%     f(p) = sum_{k in aecsBlocks} trace( inv(W_k(p)) * Sa_k ),
-%     W_k(p) = sum_{i=1}^n p_i * W_{i,k}.
-%
-%   Notes:
-%     - Simplex feasibility of p is handled by the projection operator in
-%       the solver; this method only checks dimension consistency.
+    % EVALAECS Evaluate AECS objective and optionally its gradient.
+    %   f = evalAecs(obj,p) computes the AECS objective value only.
+    %   [f,g] = evalAecs(obj,p) computes the objective and its gradient.
+    %
+    %   AECS (blockwise):
+    %     f(p) = sum_{k in aecsBlocks} trace( inv(W_k(p)) * Sa_k ),
+    %     W_k(p) = sum_{i=1}^n p_i * W_{i,k}.
+    %
+    %   Notes:
+    %     - Simplex feasibility of p is handled by the projection operator in
+    %       the solver; this method only checks dimension consistency.
 
-    validateattributes(p, {'double'}, {'vector','real'}, 'WList', 'p');
+    validateattributes(p, {'double'}, {'vector', 'real'}, 'WList', 'p');
     p = p(:);
     n = obj.n;
     if numel(p) ~= n
         error('WList:InvalidPSize', ...
-            'p must have length equal to Dimension (%d). Got %d.', n, numel(p));
+              'p must have length equal to Dimension (%d). Got %d.', n, numel(p));
     end
 
     wantGrad = (nargout >= 2);
     if wantGrad
-        g = zeros(n,1);
+        g = zeros(n, 1);
     else
         g = [];
     end
@@ -52,7 +52,7 @@ function [f, g] = evalAecs(obj, p)
                 % g_i += -trace( (Winvk * Winvk) * W_{i,k} )
                 Gk = Winvk * Winvk;
 
-                for i = 1 : n
+                for i = 1:n
                     Wik = obj.W{i}{k};
                     g(i) = g(i) - sum(Gk .* Wik.', "all");
                 end
@@ -65,8 +65,8 @@ function [f, g] = evalAecs(obj, p)
             if wantGrad
                 % g_i += -trace( (Winvk * Sak * Winvk) * W_{i,k} )
                 Gk = Winvk * Sak * Winvk;
-    
-                for i = 1 : n
+
+                for i = 1:n
                     Wik = obj.W{i}{k};
                     g(i) = g(i) - sum(Gk .* Wik.', "all");
                 end

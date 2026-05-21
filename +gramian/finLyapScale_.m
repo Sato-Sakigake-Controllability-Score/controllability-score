@@ -11,9 +11,9 @@ function wlist = finLyapScale_(A, T, wopts)
     nS = blockSizes(1);
     nI = blockSizes(2);
     nU = blockSizes(3);
-    idxS = 1 : nS;
-    idxI = nS + 1 : nS + nI;
-    idxU = nS + nI + 1 : n;
+    idxS = 1:nS;
+    idxI = nS + 1:nS + nI;
+    idxU = nS + nI + 1:n;
 
     W = cell(n, 1);
 
@@ -24,7 +24,7 @@ function wlist = finLyapScale_(A, T, wopts)
         emAUT = expm(-T * blocks{3});
     end
 
-    for i = 1 : n
+    for i = 1:n
         W{i} = cell(1, 1);
         W{i}{1} = zeros(n, n);
 
@@ -40,11 +40,11 @@ function wlist = finLyapScale_(A, T, wopts)
         % --- imaginary axis ---
         if ~isempty(idxI)
             QinviI = Qinvi(idxI);
-            CII = [-blocks{2}, QinviI * QinviI.';
-                    zeros(nI, nI), blocks{2}.'];
+            CII = [-blocks{2}, QinviI * QinviI.'
+                   zeros(nI, nI), blocks{2}.'];
             eCIIT = expm(T * CII);
-            eAIT = eCIIT(nI + 1 : 2 * nI, nI + 1 : 2 * nI).';
-            W{i}{1}(idxI, idxI) = eAIT * eCIIT(1 : nI, nI + 1 : 2 * nI) / T;
+            eAIT = eCIIT(nI + 1:2 * nI, nI + 1:2 * nI).';
+            W{i}{1}(idxI, idxI) = eAIT * eCIIT(1:nI, nI + 1:2 * nI) / T;
         end
 
         % --- right half plane ---
@@ -57,28 +57,28 @@ function wlist = finLyapScale_(A, T, wopts)
         % ---- cross terms ----
         % --- left half plane and imaginary axis ---
         if ~isempty(idxS) && ~isempty(idxI)
-            CIS = [-blocks{2}, QinviI * QinviS.';
-                    zeros(nS, nI), blocks{1}.'];
+            CIS = [-blocks{2}, QinviI * QinviS.'
+                   zeros(nS, nI), blocks{1}.'];
             eCIST = expm(T * CIS);
-            W{i}{1}(idxI, idxS) = eAIT * eCIST(1 : nI, nI + 1 : nI + nS) / sqrt(T);
+            W{i}{1}(idxI, idxS) = eAIT * eCIST(1:nI, nI + 1:nI + nS) / sqrt(T);
             W{i}{1}(idxS, idxI) = W{i}{1}(idxI, idxS).';
         end
 
         % --- left half plane and right half plane ---
         if ~isempty(idxS) && ~isempty(idxU)
-            CUS = [-blocks{3}, QinviU * QinviS.';
-                    zeros(nS, nU), blocks{1}.'];
+            CUS = [-blocks{3}, QinviU * QinviS.'
+                   zeros(nS, nU), blocks{1}.'];
             eCUST = expm(T * CUS);
-            W{i}{1}(idxU, idxS) = eCUST(1 : nU, nU + 1 : nU + nS);
+            W{i}{1}(idxU, idxS) = eCUST(1:nU, nU + 1:nU + nS);
             W{i}{1}(idxS, idxU) = W{i}{1}(idxU, idxS).';
         end
 
         % --- imaginary axis and right half plane ---
         if ~isempty(idxI) && ~isempty(idxU)
-            CUI = [-blocks{3}, QinviU * QinviI.';
-                    zeros(nI, nU), blocks{2}.'];
+            CUI = [-blocks{3}, QinviU * QinviI.'
+                   zeros(nI, nU), blocks{2}.'];
             eCUIT = expm(T * CUI);
-            W{i}{1}(idxU, idxI) = eCUIT(1 : nU, nU + 1 : nU + nI) / sqrt(T);
+            W{i}{1}(idxU, idxI) = eCUIT(1:nU, nU + 1:nU + nI) / sqrt(T);
             W{i}{1}(idxI, idxU) = W{i}{1}(idxU, idxI).';
         end
     end
