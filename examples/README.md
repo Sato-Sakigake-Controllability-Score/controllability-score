@@ -22,12 +22,12 @@ window.MathJax = {
 
 - MATLAB R2024a 以降
 - Control System Toolbox
-- リポジトリのルートディレクトリから実行する
 - `figure` や GUI を使うコードでは，MATLAB の GUI 表示環境が必要
 
-サンプルスクリプトを実行する場合は，次のようにリポジトリのルートから呼び出す．
+サンプルスクリプトを実行する場合は，次のようにリポジトリのルートをパスに追加した状態で, 呼び出す．
 
 ```matlab
+addpath(/path/to/controllability-score)  % リポジトリのルートディレクトリをパスに追加
 run("examples/ex01_minimal_bothcs.m")
 ```
 
