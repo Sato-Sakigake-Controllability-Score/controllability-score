@@ -39,5 +39,5 @@ eggs/
 Thumbs.db
 npm-debug.log
 
-# Large or generated project resources (adjust if you actually want them tracked)
+# Large or generated project resources
 /resources/project/
