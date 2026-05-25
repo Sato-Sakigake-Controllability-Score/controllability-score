@@ -1,0 +1,43 @@
+# macOS
+.DS_Store
+
+# MATLAB
+*.mex*
+*.p
+*.asv
+*.mat
+*.log
+*.slxc
+*.slxp
+*.mdl.autosave
+*.fig
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+env.bak/
+pip-wheel-metadata/
+*.egg-info/
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build / distribution
+build/
+dist/
+eggs/
+*.egg
+
+# Misc
+Thumbs.db
+npm-debug.log
+
+# Large or generated project resources (adjust if you actually want them tracked)
+/resources/project/
