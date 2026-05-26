@@ -40,7 +40,21 @@ function wlist = infLyapScale_(A, wopts)
         end
     end
 
+
+    G = Qinv * Qinv.';
     Sa = cell(size(W{1}));
+    j = 1;
+    if ~isempty(idxS)
+        Sa{j} = G(idxS, idxS);
+        j = j + 1;
+    end
+    if ~isempty(idxI)
+        Sa{j} = zeros(nI, nI);
+        j = j + 1;
+    end
+    if ~isempty(idxU)
+        Sa{j} = zeros(nU, nU);
+    end
     vcsBlocks = 1 : size(W{1}, 2);
     aecsBlocks = 1;
 
