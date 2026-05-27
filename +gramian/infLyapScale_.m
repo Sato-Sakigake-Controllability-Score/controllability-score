@@ -55,7 +55,7 @@ function wlist = infLyapScale_(A, wopts)
     if ~isempty(idxU)
         Sa{j} = sparse(nU, nU);
     end
-    vcsBlocks = 1 : size(W{1}, 2);
+    vcsBlocks = 1:size(W{1}, 2);
     aecsBlocks = 1;
 
     wlist = WList(W, Q, Sa, wopts, vcsBlocks, aecsBlocks);
