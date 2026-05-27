@@ -8,6 +8,7 @@
 ### 動作環境
 - MATLAB バージョン：R2024a
 - 必要なツールボックス：Control System Toolbox
+- 開発用環境：Python 3.x，MISS_HIT 0.9.44
 
 開発や Pull Request の手順は [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください．
 

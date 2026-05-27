@@ -5,6 +5,7 @@
 ## コード整形 (Formatter)
 
 このリポジトリでは MATLAB コードの整形に MISS_HIT を使用します。以下の手順に従ってください。
+開発用環境として Python 3.x と `requirements-dev.txt` に記載された MISS_HIT を使用します。
 
 ### セットアップ
 
