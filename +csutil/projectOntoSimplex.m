@@ -1,19 +1,19 @@
 function pProj = projectOntoSimplex(p)
-%PROJECTONTOSIMPLEX Project a vector onto the probability simplex.
-%   pProj = projectOntoSimplex(p) returns the Euclidean projection of p onto
-%       { x : x >= 0, sum(x) = 1 }.
-%
-%   The output is a column vector with the same number of elements as p.
+    % PROJECTONTOSIMPLEX Project a vector onto the probability simplex.
+    %   pProj = projectOntoSimplex(p) returns the Euclidean projection of p onto
+    %       { x : x >= 0, sum(x) = 1 }.
+    %
+    %   The output is a column vector with the same number of elements as p.
 
-    validateattributes(p, {'double'}, {'vector','real','finite'}, ...
-        'projectOntoSimplex', 'p');
+    validateattributes(p, {'double'}, {'vector', 'real', 'finite'}, ...
+                       'projectOntoSimplex', 'p');
 
     p = p(:);
     n = numel(p);
 
     if n == 0
         error('csutil:projectOntoSimplex:EmptyInput', ...
-            'Input must be a nonempty vector.');
+              'Input must be a nonempty vector.');
     end
 
     % Sort in descending order
@@ -27,7 +27,7 @@ function pProj = projectOntoSimplex(p)
 
     if isempty(rho)
         % Should not happen for finite input, but keep it safe.
-        pProj = ones(n,1) / n;
+        pProj = ones(n, 1) / n;
         return
     end
 
@@ -41,6 +41,6 @@ function pProj = projectOntoSimplex(p)
     if s ~= 0
         pProj = pProj / s;
     else
-        pProj = ones(n,1) / n;
+        pProj = ones(n, 1) / n;
     end
 end

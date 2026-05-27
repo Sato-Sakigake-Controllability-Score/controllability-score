@@ -11,6 +11,8 @@
 - MATLAB バージョン：R2024a
 - 必要なツールボックス：Control System Toolbox
 
+開発や Pull Request の手順は [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください．
+
 ### 要改善部分
 - `gramian.infLyapScale_`
   - 虚軸上の固有値部分のグラミアンの計算が近似であり，ジョルダンブロックがある場合に不安定になる可能性がある．

@@ -11,13 +11,13 @@ function wlist = infLyapScale_(A, wopts)
     nS = blockSizes(1);
     nI = blockSizes(2);
     nU = blockSizes(3);
-    idxS = 1 : nS;
-    idxI = nS + 1 : nS + nI;
-    idxU = nS + nI + 1 : n;
+    idxS = 1:nS;
+    idxI = nS + 1:nS + nI;
+    idxU = nS + nI + 1:n;
 
     W = cell(n, 1);
 
-    for i = 1 : n
+    for i = 1:n
         Qinvi = Qinv(:, i);
 
         % --- left half plane ---
@@ -29,7 +29,7 @@ function wlist = infLyapScale_(A, wopts)
         % --- imaginary axis ---
         if ~isempty(idxI)
             QinviI = Qinvi(idxI);
-            %W{i}{end + 1} = QinviI * QinviI.';
+            % W{i}{end + 1} = QinviI * QinviI.';
             W{i}{end + 1} = lyap(blocks{2} - 1e-8 * eye(size(blocks{2})), QinviI * QinviI.');
         end
 
@@ -41,7 +41,7 @@ function wlist = infLyapScale_(A, wopts)
     end
 
     Sa = cell(size(W{1}));
-    vcsBlocks = 1 : size(W{1}, 2);
+    vcsBlocks = 1:size(W{1}, 2);
     aecsBlocks = 1;
 
     wlist = WList(W, Q, Sa, wopts, vcsBlocks, aecsBlocks);

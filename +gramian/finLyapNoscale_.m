@@ -7,7 +7,7 @@ function wlist = finLyapNoscale_(A, T, wopts)
 
     switch wopts.Method
         case "lyap"
-            for i = 1 : n
+            for i = 1:n
                 eATi = eAT(:, i);
                 rhs = -eATi * eATi.';
                 rhs(i, i) = rhs(i, i) + 1;
@@ -15,10 +15,10 @@ function wlist = finLyapNoscale_(A, T, wopts)
             end
 
         case "adi"
-            error("implement later.")
+            error("implement later.");
 
         otherwise
-            error("Unknown Method ""%s"".", wopts.Method)
+            error("Unknown Method ""%s"".", wopts.Method);
     end
 
     Q = [];
