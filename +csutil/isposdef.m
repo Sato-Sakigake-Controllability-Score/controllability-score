@@ -1,15 +1,15 @@
 function varargout = isposdef(A)
-%ISPOSDEF Test numerical symmetric positive definiteness of a matrix.
-%
-%   tf = isposdef(A)
-%   [tf,d] = isposdef(A)
-%
-%   Criterion:
-%       tol = length(d) * eps(max(abs(d)))
-%       eigenvalues within tol of zero are treated as zero
+    % ISPOSDEF Test numerical symmetric positive definiteness of a matrix.
+    %
+    %   tf = isposdef(A)
+    %   [tf,d] = isposdef(A)
+    %
+    %   Criterion:
+    %       tol = length(d) * eps(max(abs(d)))
+    %       eigenvalues within tol of zero are treated as zero
 
     % --- Check square matrix ---
-    validateattributes(A, {'double'}, {'2d','real','square'}, 'isposdef', 'A', 1);
+    validateattributes(A, {'double'}, {'2d', 'real', 'square'}, 'isposdef', 'A', 1);
 
     if ~issymmetric(A)
         tf = false;

@@ -4,7 +4,7 @@ function wlist = finTargetLyap_(A, T, targetNodes, wopts)
 
     W = cell(m, 1);
 
-    for i = 1 : m
+    for i = 1:m
         idx = targetNodes(i);
         rhs = -eAT(:, idx) * eAT(:, idx).';
         rhs(idx, idx) = rhs(idx, idx) + 1;

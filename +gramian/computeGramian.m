@@ -1,10 +1,10 @@
 % +cscore/+gramian/computeGramian.m
 function wlist = computeGramian(A, T, varargin)
-%COMPUTEGRAMIAN Build WList from (A,T,WOptions[,targetNodes])
-%
-% wlist = computeGramian(A, T, wopts)
-% wlist = computeGramian(A, T, wopts, targetNodes)
-%
+    % COMPUTEGRAMIAN Build WList from (A,T,WOptions[,targetNodes])
+    %
+    % wlist = computeGramian(A, T, wopts)
+    % wlist = computeGramian(A, T, wopts, targetNodes)
+    %
 
     narginchk(3, 4);
 
@@ -23,9 +23,9 @@ function wlist = computeGramian(A, T, varargin)
                     wlist = gramian.infTargetLyap_(A, targetNodes, wopts);
                 case "integral"
                     error("T=inf does not allow WOptions.Method=""%s"".", ...
-                        wopts.Method);
+                          wopts.Method);
                 otherwise
-                    error("Unknown Method ""%s"".", wopts.Method)
+                    error("Unknown Method ""%s"".", wopts.Method);
             end
             return
         end
@@ -36,7 +36,7 @@ function wlist = computeGramian(A, T, varargin)
             case "integral"
                 wlist = gramian.finTargetIntegral_(A, T, targetNodes, wopts);
             otherwise
-                error("Unknown Method ""%s"".", wopts.Method)
+                error("Unknown Method ""%s"".", wopts.Method);
         end
         return
     end
@@ -52,10 +52,10 @@ function wlist = computeGramian(A, T, varargin)
 
             case "integral"
                 error("T=inf does not allow WOptions.Method=""%s"".", ...
-                    wopts.Method);
+                      wopts.Method);
 
             otherwise
-                error("Unknown Method ""%s"".", wopts.Method)
+                error("Unknown Method ""%s"".", wopts.Method);
         end
         return
     end
@@ -76,6 +76,6 @@ function wlist = computeGramian(A, T, varargin)
             end
 
         otherwise
-            error("Unknown Method ""%s"".", wopts.Method)
+            error("Unknown Method ""%s"".", wopts.Method);
     end
 end

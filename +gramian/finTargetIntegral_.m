@@ -9,11 +9,11 @@ function wlist = finTargetIntegral_(A, T, targetNodes, wopts)
     dt = T / steps;
 
     W = cell(m, 1);
-    for i = 1 : m
+    for i = 1:m
         W{i} = {zeros(m, m)};
     end
 
-    for k = 0 : steps
+    for k = 0:steps
         t = k * dt;
         eAt = expm(t * A);
         V = eAt(targetNodes, targetNodes);
@@ -26,7 +26,7 @@ function wlist = finTargetIntegral_(A, T, targetNodes, wopts)
             weight = 4 * dt / 3;
         end
 
-        for i = 1 : m
+        for i = 1:m
             vi = V(:, i);
             W{i}{1} = W{i}{1} + weight * (vi * vi.');
         end

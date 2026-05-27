@@ -1,12 +1,11 @@
 function [blocks, blockSizes, eigA, Q, Qinv] = blockDiagonalization_(A, wopts)
-%BLOCKDIAGONALIZATION_  Block diagonalize A
+    % BLOCKDIAGONALIZATION_  Block diagonalize A
 
-    validateattributes(A, {'double'}, {'2d','real','square'}, mfilename, 'A');
+    validateattributes(A, {'double'}, {'2d', 'real', 'square'}, mfilename, 'A');
     tol = wopts.EigTol;
-    validateattributes(tol, {'double'}, {'scalar','real','positive'}, mfilename, 'tol');
+    validateattributes(tol, {'double'}, {'scalar', 'real', 'positive'}, mfilename, 'tol');
 
     n = size(A, 1);
-
 
     % --- Schur of A.' and eigenvalues ---
     [U, L] = schur(A.', 'real');
@@ -21,7 +20,7 @@ function [blocks, blockSizes, eigA, Q, Qinv] = blockDiagonalization_(A, wopts)
     nU = nnz(isU);
 
     if nS + nI + nU ~= n
-        error('%s:SchurFails', mfilename)
+        error('%s:SchurFails', mfilename);
     end
 
     % --- if A is stable, no transform is applied ---
@@ -43,9 +42,9 @@ function [blocks, blockSizes, eigA, Q, Qinv] = blockDiagonalization_(A, wopts)
     L = L.';
 
     % --- indices (empty ranges allowed) ---
-    idxS = 1 : nS;
-    idxI = nS + 1 : nS + nI;
-    idxU = nS + nI + 1 : n;
+    idxS = 1:nS;
+    idxI = nS + 1:nS + nI;
+    idxU = nS + nI + 1:n;
 
     % --- extract diagonal blocks (0x0 if empty) ---
     Ls = L(idxS, idxS);
@@ -94,7 +93,6 @@ function [blocks, blockSizes, eigA, Q, Qinv] = blockDiagonalization_(A, wopts)
     end
 
     Sinv = S \ eye(n);
-
 
     % --- return ---
     blocks = {Ls, Li, Lu};
