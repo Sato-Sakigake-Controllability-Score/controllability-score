@@ -40,7 +40,6 @@ function wlist = infLyapScale_(A, wopts)
         end
     end
 
-
     Sa = cell(size(W{1}));
     j = 1;
     if ~isempty(idxS)
