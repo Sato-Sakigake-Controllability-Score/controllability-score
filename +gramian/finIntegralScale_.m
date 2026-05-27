@@ -4,7 +4,7 @@ function wlist = finIntegralScale_(A, T, wopts)
     [blocks, blockSizes, ~, Q, Qinv] = gramian.blockDiagonalization_(A, wopts);
 
     if isempty(Q)
-        wlist = gramian.finIntegralScale_(A, T, wopts);
+        wlist = gramian.finIntegralNoscale_(A, T, wopts);
         return
     end
 
