@@ -44,16 +44,16 @@ function wlist = infLyapScale_(A, wopts)
     Sa = cell(size(W{1}));
     j = 1;
     if ~isempty(idxS)
-        QinvS = Qinv(idxS, :);
-        Sa{j} = QinvS * QinvS.';
+        QinvS = Qinv(idxS, :);
+        Sa{j} = QinvS * QinvS.';
         j = j + 1;
     end
     if ~isempty(idxI)
-        Sa{j} = sparse(nI, nI);
+        Sa{j} = sparse(nI, nI);
         j = j + 1;
     end
     if ~isempty(idxU)
-        Sa{j} = sparse(nU, nU);
+        Sa{j} = sparse(nU, nU);
     end
     vcsBlocks = 1 : size(W{1}, 2);
     aecsBlocks = 1;
