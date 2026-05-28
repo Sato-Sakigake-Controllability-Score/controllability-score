@@ -11,6 +11,7 @@
 - 開発用環境：Python >= 3.7, < 4.0，MISS_HIT 0.9.44
 
 開発や Pull Request の手順は [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください．
+実行時のエラーや数値計算で詰まった場合は [TROUBLESHOOTING.md](TROUBLESHOOTING.md) を参照してください．
 
 ### 要改善部分
 - `gramian.infLyapScale_`

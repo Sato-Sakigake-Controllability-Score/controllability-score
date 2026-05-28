@@ -23,3 +23,7 @@ make format-check  # CI 用: 整形が必要なファイルがないか確認す
 - ローカルでの作業後は `make format` を実行して自動整形してください。
 - CI では PR ごとに `make format-check` が実行され、整形が必要なファイルがあると失敗します。
 - 文字コードや改行の問題で formatter が失敗することがあります。`miss_hit.cfg` を参照し、プロジェクトの設定（例: `--input-encoding utf-8`, `line_length`）を確認してください。
+
+## トラブルシューティング
+
+セットアップ，MATLAB パス，Control System Toolbox，Gramian 計算，solver 収束などで詰まった場合は [TROUBLESHOOTING.md](TROUBLESHOOTING.md) を参照してください。
