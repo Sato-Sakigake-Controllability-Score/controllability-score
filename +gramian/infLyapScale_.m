@@ -3,9 +3,17 @@ function wlist = infLyapScale_(A, wopts)
     n = size(A, 1);
     [blocks, blockSizes, ~, Q, Qinv] = gramian.blockDiagonalization_(A, wopts);
 
-    idxS = 1:blockSizes(1);
-    idxI = blockSizes(1) + 1:blockSizes(1) + blockSizes(2);
-    idxU = blockSizes(1) + blockSizes(2) + 1:n;
+    if isempty(Q)
+        wlist = gramian.infLyapNoscale_(A, wopts);
+        return
+    end
+
+    nS = blockSizes(1);
+    nI = blockSizes(2);
+    nU = blockSizes(3);
+    idxS = 1:nS;
+    idxI = nS + 1:nS + nI;
+    idxU = nS + nI + 1:n;
 
     W = cell(n, 1);
 
@@ -33,6 +41,19 @@ function wlist = infLyapScale_(A, wopts)
     end
 
     Sa = cell(size(W{1}));
+    j = 1;
+    if ~isempty(idxS)
+        QinvS = Qinv(idxS, :);
+        Sa{j} = QinvS * QinvS.';
+        j = j + 1;
+    end
+    if ~isempty(idxI)
+        Sa{j} = sparse(nI, nI);
+        j = j + 1;
+    end
+    if ~isempty(idxU)
+        Sa{j} = sparse(nU, nU);
+    end
     vcsBlocks = 1:size(W{1}, 2);
     aecsBlocks = 1;
 
