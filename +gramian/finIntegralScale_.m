@@ -22,6 +22,10 @@ function wlist = finIntegralScale_(A, T, wopts)
     end
     dt = T / steps;
 
+    if ~isempty(idxU)
+        emAUT = expm(-T * blocks{3});
+    end
+
     W = cell(n, 1);
     for i = 1:n
         W{i} = {zeros(n, n)};
