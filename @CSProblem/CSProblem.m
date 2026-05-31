@@ -17,6 +17,10 @@ classdef CSProblem
 
         % Dimensions
         Dimension          % n = size(A,1)
+
+        % Target node indices for target controllability score problems.
+        % Empty means the original full-state controllability score.
+        TargetNodes
     end
 
     %% Initial guess (user-settable but dimension-consistent)
@@ -75,19 +79,34 @@ classdef CSProblem
 
             addParameter(parser, 'InitialGuess', [], ...
                          @(v) isempty(v) || (isnumeric(v) && isvector(v)));
+            addParameter(parser, 'TargetNodes', [], ...
+                         @(v) isempty(v) || (isnumeric(v) && isvector(v)));
 
             parse(parser, varargin{nvStart:end});
             r = parser.Results;
 
             wopts = r.WOptions;
 
+            targetNodes = [];
+            if ~isempty(r.TargetNodes)
+                targetNodes = unique(r.TargetNodes(:), "stable");
+                validateattributes(targetNodes, {'double'}, ...
+                                   {'integer', 'positive', '<=', n}, 'CSProblem', 'TargetNodes');
+                targetNodes = double(targetNodes(:));
+            end
+
             % ----- Compute W list (block-diagonal representation) -----
-            WList = gramian.computeGramian(A, T, wopts);
+            if isempty(targetNodes)
+                WList = gramian.computeGramian(A, T, wopts);
+                obj.Dimension = n;
+            else
+                WList = gramian.computeGramian(A, T, wopts, targetNodes);
+                obj.Dimension = numel(targetNodes);
+            end
 
             % ----- Assign core properties -----
             obj.WList           = WList;
-
-            obj.Dimension       = n;
+            obj.TargetNodes     = targetNodes;
 
             % ----- InitialGuess -----
             if isempty(r.InitialGuess)
