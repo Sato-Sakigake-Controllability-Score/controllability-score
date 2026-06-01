@@ -6,8 +6,9 @@
 主にシステム行列$A$と終端時刻$T$を受け取り，可制御性スコア(VCS, AECS)を出力する．
 
 ### 動作環境
-- MATLAB バージョン：R2024a
+- MATLAB バージョン：R2024a以上
 - 必要なツールボックス：Control System Toolbox
+- 開発用環境：Python >= 3.7, < 4.0，MISS_HIT 0.9.44
 
 開発や Pull Request の手順は [CONTRIBUTING.md](CONTRIBUTING.md) を参照してください．
 
