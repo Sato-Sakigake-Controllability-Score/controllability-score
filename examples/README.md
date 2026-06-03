@@ -1,22 +1,19 @@
-<script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true
-  },
-  svg: {
-    fontCache: 'global'
-  }
-};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-
 # 使用例
 
 この README は，controllability score の使い方をMATLABのコードで順に確認するためのガイドである．
 
 `ex01_*.m` から `ex04_*.m` までのファイルは，ここで説明する使い方をまとまった形で実行できる参考スクリプトとして置いている．
+
+## リポジトリの取得
+
+まず，ターミナルで任意の作業ディレクトリに移動し，GitHub からリポジトリを clone する．
+
+```sh
+git clone https://github.com/Sato-Sakigake-Controllability-Score/controllability-score.git
+cd controllability-score
+```
+
+以下では，この `controllability-score` ディレクトリをリポジトリのルートディレクトリと呼ぶ．
 
 ## 前提
 
@@ -24,10 +21,10 @@ window.MathJax = {
 - Control System Toolbox
 - `figure` や GUI を使うコードでは，MATLAB の GUI 表示環境が必要
 
-サンプルスクリプトを実行する場合は，次のようにリポジトリのルートをパスに追加した状態で, 呼び出す．
+サンプルスクリプトを実行する場合は，MATLAB でリポジトリのルートディレクトリに移動し，次のようにルートをパスに追加した状態で呼び出す．
 
 ```matlab
-addpath(/path/to/controllability-score)  % リポジトリのルートディレクトリをパスに追加
+addpath(pwd)  % リポジトリのルートディレクトリをパスに追加
 run("examples/ex01_minimal_bothcs.m")
 ```
 
