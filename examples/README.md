@@ -196,9 +196,9 @@ T = 2.0;
 | [`ex05_minimal_graph_bothcs.m`][ex05] | 隣接行列を有向グラフとして表示し，同じ行列から VCS と AECS を計算 |
 
 
-[repo-readme]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/README.md
-[ex01]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex01_minimal_bothcs.m
-[ex02]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex02_finite_horizon.m
-[ex03]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex03_edge_weight_sweep.m
-[ex04]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex04_visualize_scores.m
-[ex05]: https://github.com/Sato-Sakigake-Controllability-Score/controllability-score/blob/examples-skeleton/examples/ex05_minimal_graph_bothcs.m
+[repo-readme]: ../README.md
+[ex01]: ./ex01_minimal_bothcs.m
+[ex02]: ./ex02_finite_horizon.m
+[ex03]: ./ex03_edge_weight_sweep.m
+[ex04]: ./ex04_visualize_scores.m
+[ex05]: ./ex05_minimal_graph_bothcs.m
