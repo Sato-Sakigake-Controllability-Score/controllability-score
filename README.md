@@ -670,6 +670,41 @@ $$
 `gramian.computeGramian`を修正し，ターゲット可制御性スコア用の可制御性グラミアン等を計算した上でWListへ渡せば問題ないと思われる．
 無限時間区間への拡張ができるかは不明である．
 
+## Citation
+
+このソースコードを論文内で利用した場合は，以下の文献を引用してください．
+
+```bibtex
+@article{sato2024controllability,
+  title={Controllability scores for selecting control nodes of large-scale network systems},
+  author={Sato, Kazuhiro and Terasaki, Shun},
+  journal={IEEE Transactions on Automatic Control},
+  volume={69},
+  number={7},
+  pages={4673--4680},
+  year={2024},
+  publisher={IEEE}
+}
+
+@article{sato2025uniqueness,
+  title={Uniqueness analysis of controllability scores and their application to brain networks},
+  author={Sato, Kazuhiro and Kawamura, Ryohei},
+  journal={IEEE Transactions on Control of Network Systems},
+  volume={12},
+  number={4},
+  pages={2568--2580},
+  year={2025},
+  publisher={IEEE}
+}
+
+@article{umezu2026infinite,
+  title={Infinite-horizon controllability scores for linear time-invariant systems},
+  author={Umezu, Kota and Sato, Kazuhiro},
+  journal={arXiv preprint arXiv:2601.10260},
+  year={2026}
+}
+```
+
 ## License
 
 This software is released under the MIT License. See `LICENSE` for details.
