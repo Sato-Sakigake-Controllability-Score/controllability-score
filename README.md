@@ -41,7 +41,8 @@ project/
 ├─ +csutil/                 % 共通処理
 │
 ├─ examples/                % 使用例
-└─ README.md                % 本ドキュメント
+├─ README.md                % 本ドキュメント
+└─ LICENSE                  % ライセンス
 ```
 主な構成要素の役割は以下のとおりである．
 
@@ -668,3 +669,27 @@ $$
 目的関数は，通常の可制御性スコアとほとんど同じであるため，WListは概ね修正不要と思われる．
 `gramian.computeGramian`を修正し，ターゲット可制御性スコア用の可制御性グラミアン等を計算した上でWListへ渡せば問題ないと思われる．
 無限時間区間への拡張ができるかは不明である．
+
+## License
+
+This software is released under the MIT License. See `LICENSE` for details.
+
+## Contributors
+
+This software has been developed by members of the Sato Group.
+
+Project lead:
+
+- Kazuhiro Sato
+
+Main contributors:
+
+- Kota Umezu
+- Ritsuki Yamada
+
+## Contact
+
+For questions or bug reports, please open an issue on GitHub or contact:
+
+Kazuhiro Sato  
+kazuhiro[at]mist.i.u-tokyo.ac.jp
