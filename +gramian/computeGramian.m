@@ -18,16 +18,7 @@ function wlist = computeGramian(A, T, varargin)
 
     if ~isempty(targetNodes)
         if isinf(T)
-            switch wopts.Method
-                case "lyap"
-                    wlist = gramian.infTargetLyap_(A, targetNodes, wopts);
-                case "integral"
-                    error("T=inf does not allow WOptions.Method=""%s"".", ...
-                          wopts.Method);
-                otherwise
-                    error("Unknown Method ""%s"".", wopts.Method);
-            end
-            return
+            error('T=inf does not allow target nodes.');
         end
 
         switch wopts.Method
