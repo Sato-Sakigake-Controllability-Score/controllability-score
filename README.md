@@ -72,8 +72,8 @@ project/
 `vcs.m`はVCSを（オプションで計算過程の情報とともに）出力する． \
 `aecs.m`はAECSを（オプションで計算過程の情報とともに）出力する． \
 `bothcs.m`は両方を出力する． \
-アルゴリズムの最初に  $  W_1,\ldots,W_n  $  を一度に計算し，それをもとにVCSとAECSを計算するため，`vcs.m`，`aecs.m`を順に呼び出すよりも`bothcs.m`を呼び出す方が効率的である． \
-（特に， $ W_1,\ldots,W_n $ の計算コストが大きい場合に顕著になる．） \
+アルゴリズムの最初に  $`W_1,\ldots,W_n`$  を一度に計算し，それをもとにVCSとAECSを計算するため，`vcs.m`，`aecs.m`を順に呼び出すよりも`bothcs.m`を呼び出す方が効率的である． \
+（特に， $`W_1,\ldots,W_n`$ の計算コストが大きい場合に顕著になる．） \
 `CSProblem`オブジェクトを生成したのち，`CSProblem.solveVcs`, `CSProblem.solveAecs`によってVCS，AECSを計算する．
 
 - 入力：
