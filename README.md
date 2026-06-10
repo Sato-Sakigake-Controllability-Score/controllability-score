@@ -4,7 +4,7 @@
 
 本プロジェクトは，可制御性スコアの計算を目的としたMATLABライブラリである．
 主にシステム行列$A$と終端時刻$T$を受け取り，可制御性スコア(VCS, AECS)を出力する．
-加えて，Target Controllability Score
+加えて，ターゲット可制御性スコア
 （target VCS, target AECS）を `TargetNodes` オプション付きの `vcs`, `aecs`, `bothcs` で計算できる．
 
 ### 動作環境
@@ -70,7 +70,7 @@ project/
 
 ### 4.1 トップレベル関数（`vcs.m`, `aecs.m`, `bothcs.m`）
 
-#### 4.1.1 通常可制御性スコア用API（`vcs.m`, `aecs.m`, `bothcs.m`）
+#### 4.1.1 通常可制御性スコア用API
 
 本関数はVCS，AECSを計算するための基本関数である． \
 `vcs.m`はVCSを（オプションで計算過程の情報とともに）出力する． \
@@ -170,7 +170,7 @@ project/
   - `[pV, pA] = bothcs(A)`
   - `[pV, pA, infoV, infoA] = bothcs(A)`
 
-#### 4.1.2 `TargetNodes` を用いた target controllability score
+#### 4.1.2 ターゲット可制御性スコア用API
 
 target VCS / target AECS は，`vcs`, `aecs`, `bothcs` に `TargetNodes` オプションを与えることで計算する． \
 `TargetNodes` には target node の添字ベクトルを与える．
@@ -735,6 +735,13 @@ $$
   pages={2568--2580},
   year={2025},
   publisher={IEEE}
+}
+
+@article{sato2025target,
+  title={Target Controllability Scores for Actuation-Constrained Network Intervention}, 
+  author={Kazuhiro Sato},
+  journal={arXiv preprint arXiv:2510.13354},
+  year={2025}
 }
 
 @article{umezu2026infinite,
