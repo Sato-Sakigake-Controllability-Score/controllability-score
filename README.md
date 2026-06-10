@@ -43,7 +43,8 @@ project/
 ├─ +csutil/                 % 共通処理
 │
 ├─ examples/                % 使用例
-└─ README.md                % 本ドキュメント
+├─ README.md                % 本ドキュメント
+└─ LICENSE                  % ライセンス
 ```
 主な構成要素の役割は以下のとおりである．
 
@@ -708,3 +709,62 @@ $$
     pTA = aecs(A, T=2.0, TargetNodes=[1 3 5], Method="integral", Steps=80) % target AECS
     [pTV, pTA] = bothcs(A, T=2.0, TargetNodes=[1 3 5]) % target VCS/AECS を同時に計算
 ```
+
+## Citation
+
+このソースコードを論文内で利用した場合は，以下の文献を引用してください．
+
+```bibtex
+@article{sato2024controllability,
+  title={Controllability scores for selecting control nodes of large-scale network systems},
+  author={Sato, Kazuhiro and Terasaki, Shun},
+  journal={IEEE Transactions on Automatic Control},
+  volume={69},
+  number={7},
+  pages={4673--4680},
+  year={2024},
+  publisher={IEEE}
+}
+
+@article{sato2025uniqueness,
+  title={Uniqueness analysis of controllability scores and their application to brain networks},
+  author={Sato, Kazuhiro and Kawamura, Ryohei},
+  journal={IEEE Transactions on Control of Network Systems},
+  volume={12},
+  number={4},
+  pages={2568--2580},
+  year={2025},
+  publisher={IEEE}
+}
+
+@article{umezu2026infinite,
+  title={Infinite-horizon controllability scores for linear time-invariant systems},
+  author={Umezu, Kota and Sato, Kazuhiro},
+  journal={arXiv preprint arXiv:2601.10260},
+  year={2026}
+}
+```
+
+## License
+
+This software is released under the MIT License. See `LICENSE` for details.
+
+## Contributors
+
+This software has been developed by members of the Sato Group.
+
+Project lead:
+
+- Kazuhiro Sato
+
+Main contributors:
+
+- Kota Umezu
+- Ritsuki Yamada
+
+## Contact
+
+For questions or bug reports, please open an issue on GitHub or contact:
+
+Kazuhiro Sato  
+kazuhiro[at]mist.i.u-tokyo.ac.jp
