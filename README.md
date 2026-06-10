@@ -708,17 +708,3 @@ $$
     pTA = aecs(A, T=2.0, TargetNodes=[1 3 5], Method="integral", Steps=80) % target AECS
     [pTV, pTA] = bothcs(A, T=2.0, TargetNodes=[1 3 5]) % target VCS/AECS を同時に計算
 ```
-
-
-## 7. target controllability score 実装メモ
-target 版は，論文 arXiv:2510.13354 の
-\[
-W(p,T) = \sum_{i=1}^m p_i W_i(T), \qquad W_i(T) = C W_{f,i}(T) C^\top
-\]
-に対応するように実装している．
-
-現在の実装上の前提は以下のとおりである．
-
-- `targetNodes` が target node 集合であり，同時に actuator candidate node 集合でもある
-- target 版の Gramian 計算は direct な non-scaling 実装を使う
-- `T<\infty` では `Method="lyap"` または `Method="integral"` を使える
