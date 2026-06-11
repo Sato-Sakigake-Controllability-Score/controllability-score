@@ -494,8 +494,8 @@ W_1=
 ```math
 W(p)=
 \begin{pmatrix}
-W_1(p) \\
-& \ddots \\
+W_1(p) & & \\
+& \ddots & \\
 & & W_\ell(p)
 \end{pmatrix},
 S_{\mathrm{a}}=
