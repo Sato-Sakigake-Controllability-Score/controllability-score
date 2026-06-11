@@ -613,35 +613,48 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
   - 絶対値がwopts.EigTol未満の固有値は，虚軸上の固有値として判定する．
 
 #### 4.9.3 他の主な関数
-- `gramian.infLyapScale_`
-  -  $`T=\infty`$ において，Lyapunov方程式
-     ```math
-     \begin{gather*}
-      A_-W_{i,-}+W_{i,-}A_-+q_{i,-}q_{i,-}^\top=0 \\
-      (A_0-\varepsilon I)W_{i,0}+W_{i,0}(A_0-\varepsilon)^\top+q_{i,0}q_{i,0}^\top=0 \\
-      (-A_+)W_{i,+}+W_{i,+}(-A_+)+q_{i,+}q_{i,+}^\top=0 \\
-    \end{gather*}
-    ```
-    を用いて計算する．（スケーリングあり， $`\varepsilon=10^{-8}`$ ） \
-    **W_{i,0}の計算方法は一時的に設定しているものであり，厳密ではなく不安定になる可能性がある（要改善）**
-- `gramian.infLyapNoscale_`
-  -  $`T=\infty`$ において，Lyapunov方程式
-     ```math
-      AW_i+W_iA+e_ie_i^\top=0
-     ```
-    を用いて計算する．（スケーリングなし）
-- `gramian.finLyapScale_`
-  -  $`T<\infty`$ において，Lyapunov方程式とvan Loan (1978)を用いて計算する．（スケーリングあり）
-- `gramian.finLyapNoscale_`
-  -  $`T<\infty`$ において，Lyapunov方程式
-     ```math
-      AW_i+W_iA=e^{AT}e_ie_i^\top e^{A^\top T}-e_ie_i^\top
-     ```
-    を用いて計算する．（スケーリングなし）
-- `gramian.finIntegralScale_`
-  -  $`T<\infty`$ において，数値積分を用いて計算する．（スケーリングあり）
-- `gramian.finIntegralNoscale_`
-  -  $`T<\infty`$ において，数値積分を用いて計算する．（スケーリングなし）
+##### `gramian.infLyapScale_`
+$`T=\infty`$ において，Lyapunov方程式
+
+```math
+\begin{gather*}
+A_-W_{i,-}+W_{i,-}A_-+q_{i,-}q_{i,-}^\top=0 \\
+(A_0-\varepsilon I)W_{i,0}+W_{i,0}(A_0-\varepsilon)^\top+q_{i,0}q_{i,0}^\top=0 \\
+(-A_+)W_{i,+}+W_{i,+}(-A_+)+q_{i,+}q_{i,+}^\top=0 \\
+\end{gather*}
+```
+
+を用いて計算する．（スケーリングあり， $`\varepsilon=10^{-8}`$ ） \
+**W_{i,0}の計算方法は一時的に設定しているものであり，厳密ではなく不安定になる可能性がある（要改善）**
+
+
+##### `gramian.infLyapNoscale_`
+$`T=\infty`$ において，Lyapunov方程式
+
+```math
+AW_i+W_iA+e_ie_i^\top=0
+```
+
+を用いて計算する．（スケーリングなし）
+
+##### `gramian.finLyapScale_`
+$`T<\infty`$ において，Lyapunov方程式とvan Loan (1978)を用いて計算する．（スケーリングあり）
+
+##### `gramian.finLyapNoscale_`
+$`T<\infty`$ において，Lyapunov方程式
+
+```math
+AW_i+W_iA=e^{AT}e_ie_i^\top e^{A^\top T}-e_ie_i^\top
+```
+
+を用いて計算する．（スケーリングなし）
+
+##### `gramian.finIntegralScale_`
+$`T<\infty`$ において，数値積分を用いて計算する．（スケーリングあり）
+
+##### `gramian.finIntegralNoscale_`
+$`T<\infty`$ において，数値積分を用いて計算する．（スケーリングなし）
+
 ---
 
 ### 4.10 名前空間（`+csutil`）
