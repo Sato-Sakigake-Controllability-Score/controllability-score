@@ -1,5 +1,5 @@
 % +cscore/+gramian/computeGramian.m
-function wlist = computeGramian(A, T, varargin)
+function wlist = computeGramian(A, T, wopts, varargin)
     % COMPUTEGRAMIAN Build WList from (A,T,WOptions[,targetNodes])
     %
     % wlist = computeGramian(A, T, wopts)
@@ -8,10 +8,9 @@ function wlist = computeGramian(A, T, varargin)
 
     narginchk(3, 4);
 
-    wopts = varargin{1};
     targetNodes = [];
     if nargin >= 4
-        targetNodes = varargin{2};
+        targetNodes = varargin{1};
     end
 
     wopts.validateWOptions_;
