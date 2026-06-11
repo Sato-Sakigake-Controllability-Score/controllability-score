@@ -6,7 +6,7 @@ function varargout = aecs(A, varargin)
     %   [p,info,WList] = aecs(A,T,...)
     %
     %   Supported names:
-    %       T, TargetNodes, CSOptions, WOptions, PGSolverOptions
+    %       T, TargetNodes, CSOptions, WOptions, SolverOptions
     %       plus WOptions properties: Method, Steps, UseScaling, EigTol
     %       plus PGSolverOptions properties: StepSize, StepSizeInf, MaxIter,
     %       Tol, Rho, Sigma, Verbose, StorTrace

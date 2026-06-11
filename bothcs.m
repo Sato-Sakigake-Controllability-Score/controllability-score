@@ -5,7 +5,7 @@ function varargout = bothcs(A, varargin)
     %   [pV,pA,infoV,infoA] = bothcs(A,T,...)
     %
     %   Supported names:
-    %       T, TargetNodes, CSOptions, WOptions, PGSolverOptions
+    %       T, TargetNodes, CSOptions, WOptions, SolverOptions
     %       plus WOptions properties: Method, Steps, UseScaling, EigTol
     %       plus PGSolverOptions properties: StepSize, StepSizeInf, MaxIter,
     %       Tol, Rho, Sigma, Verbose, StorTrace
