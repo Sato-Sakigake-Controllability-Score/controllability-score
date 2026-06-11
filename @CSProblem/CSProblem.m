@@ -106,7 +106,6 @@ classdef CSProblem
 
             % ----- Assign core properties -----
             obj.WList           = WList;
-            obj.Dimension       = n;
             obj.TargetNodes     = targetNodes;
 
             % ----- InitialGuess -----
