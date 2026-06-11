@@ -483,7 +483,7 @@ W_1=
 , \ldots, W_n=
 \begin{pmatrix}
     W_{n,1} & & \\
-    & \ddots \\
+    & \ddots & \\
     & & W_{n,\ell}
 \end{pmatrix}
 ```
