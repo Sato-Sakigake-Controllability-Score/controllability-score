@@ -9,7 +9,7 @@ function varargout = aecs(A, varargin)
     %       T, TargetNodes, CSOptions, WOptions, SolverOptions
     %       plus WOptions properties: Method, Steps, UseScaling, EigTol
     %       plus PGSolverOptions properties: StepSize, StepSizeInf, MaxIter,
-    %       Tol, Rho, Sigma, Verbose, StorTrace
+    %       Tol, Rho, Sigma, Verbose, StoreTrace
     %
 
     narginchk(1, inf);
