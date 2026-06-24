@@ -630,7 +630,7 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 ---
 - アルゴリズム：
   - `targetNodes` が空のときは，`T`，`wopts.UseScaling`，`wopts.Method`の値に応じて，`gramian.infLyapScale_`，`gramian.infLyapNoscale_`，`gramian.finLyapScale_`，`gramian.finLyapNoscale_`，`gramian.finIntegralScale_`，`gramian.finIntegralNoscale_`のいずれかを呼び出し，WListオブジェクトを計算する．
-  - `targetNodes` が非空のときは，`wopts.Method` に応じて `gramian.finTargetLyap_`，`gramian.finTargetIntegral_` のいずれかを呼び出す．$T=\infty$の場合に関してはまだ理論的に定式化されていないため，エラーとする．
+  - `targetNodes` が非空のときは，`wopts.Method` に応じて `gramian.finTargetLyap_`，`gramian.finTargetIntegral_` のいずれかを呼び出す．$`T=\infty`$の場合に関してはまだ理論的に定式化されていないため，エラーとする．
 
 #### 4.9.2 主な関数 `gramian.blockDiagonalization_`
 与えられた行列 $`A`$ のブロック対角化とその変換行列を求める．
