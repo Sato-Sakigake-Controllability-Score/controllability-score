@@ -1,5 +1,15 @@
 # 可制御性スコア計算プログラム
 <!-- 2026/03/18 梅津 -->
+
+<table>
+	<thead>
+		<tr>
+			<th style="text-align:center"><a href="README_eng.md">English</a></th>
+			<th style="text-align:center">日本語</th>
+		</tr>
+	</thead>
+</table>
+
 ## 1. はじめに
 
 本プロジェクトは，可制御性スコアの計算を目的としたMATLABライブラリである．
