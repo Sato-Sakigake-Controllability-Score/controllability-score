@@ -174,7 +174,7 @@ project/
 
 target VCS / target AECS は，`vcs`, `aecs`, `bothcs` に `TargetNodes` オプションを与えることで計算する． \
 `TargetNodes` には ターゲットノードの添字ベクトルを与える．
-すなわち，$C$ を `TargetNodes` の成分を取り出す選択行列とすると，各 $W_i(T)$ は
+すなわち，$`C`$ を `TargetNodes` の成分を取り出す選択行列とすると，各 $`W_i(T)`$ は
 対応するターゲットノードへの単一入力グラミアンを ターゲット部分へ射影した
 ```math
 W_i(T) = C \tilde W_{i}(T) C^\top
