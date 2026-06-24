@@ -6,10 +6,10 @@ function varargout = aecs(A, varargin)
     %   [p,info,WList] = aecs(A,T,...)
     %
     %   Supported names:
-    %       T, CSOptions, WOptions, PGSolverOptions
+    %       T, TargetNodes, CSOptions, WOptions, SolverOptions
     %       plus WOptions properties: Method, Steps, UseScaling, EigTol
     %       plus PGSolverOptions properties: StepSize, StepSizeInf, MaxIter,
-    %       Tol, Rho, Sigma, Verbose, StorTrace
+    %       Tol, Rho, Sigma, Verbose, StoreTrace
     %
 
     narginchk(1, inf);
@@ -42,6 +42,7 @@ function varargout = aecs(A, varargin)
 
     % Core objects
     addParameter(parser, 'T', [], @(v) isempty(v) || (isnumeric(v) && isscalar(v)));
+    addParameter(parser, 'TargetNodes', [], @(v) isempty(v) || (isnumeric(v) && isvector(v)));
     addParameter(parser, 'CSOptions', CSOptions, @(v) isa(v, 'CSOptions') && isscalar(v));
     addParameter(parser, 'WOptions', [], @(v) isempty(v) || (isa(v, 'WOptions') && isscalar(v)));
     addParameter(parser, 'SolverOptions', [], @(v) isempty(v) || (isa(v, 'PGSolverOptions') && isscalar(v)));
@@ -131,7 +132,7 @@ function varargout = aecs(A, varargin)
     end
 
     % ---- Build problem using WOptions only ----
-    prob = CSProblem(A, T, "WOptions", csopts.WOptions);
+    prob = CSProblem(A, T, "WOptions", csopts.WOptions, "TargetNodes", r.TargetNodes);
 
     % ---- Solve ----
     [p, info] = prob.solveAecs(csopts.SolverOptions);
