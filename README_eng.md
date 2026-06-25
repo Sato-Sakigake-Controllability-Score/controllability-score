@@ -61,7 +61,7 @@ The roles of the main components are as follows.
 - `vcs.m`: Main function that computes VCS
 - `aecs.m`: Main function that computes AECS
 - `bothcs.m`: Main function that computes both VCS and AECS
-- `@CSProlbem`: Class representing the problem setting
+- `@CSProblem`: Class representing the problem setting
 - `@CSResult`: Class that stores computation results
 
 ---
