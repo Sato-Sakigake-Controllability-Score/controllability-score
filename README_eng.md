@@ -261,7 +261,7 @@ VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 ---
 #### 4.2.2 Main Methods `CSProblem.solveVcs`, `CSProblem.solveAecs`
 - Optional input (passed as Value):
-  - solopts: system matrix
+  - solopts: solver options
     - Type: PGSolverOptions scalar
     - Default: PGSolverOptions()
 ---
