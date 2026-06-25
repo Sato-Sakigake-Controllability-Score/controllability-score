@@ -14,6 +14,8 @@
 
 This project is a MATLAB library for computing controllability scores.
 It mainly takes a system matrix $`A`$ and a terminal time $`T`$ as inputs and outputs controllability scores (VCS, AECS).
+In addition, target controllability scores
+(target VCS, target AECS) can be computed by `vcs`, `aecs`, and `bothcs` with the `TargetNodes` option.
 
 ### Operating Environment
 - MATLAB version: R2024a or later
@@ -77,6 +79,8 @@ The roles of the main components are as follows.
 ## 4. Description of Each Module
 
 ### 4.1 Top-Level Functions (`vcs.m`, `aecs.m`, `bothcs.m`)
+
+#### 4.1.1 API for Ordinary Controllability Scores
 
 These functions are the basic functions for computing VCS and AECS. \
 `vcs.m` outputs VCS (optionally together with information about the computation process). \
@@ -176,11 +180,37 @@ After generating a `CSProblem` object, VCS and AECS are computed by `CSProblem.s
   - `[pV, pA] = bothcs(A)`
   - `[pV, pA, infoV, infoA] = bothcs(A)`
 
+#### 4.1.2 API for Target Controllability Scores
+
+target VCS / target AECS are computed by giving the `TargetNodes` option to `vcs`, `aecs`, and `bothcs`. \
+Give `TargetNodes` an index vector of target nodes.
+That is, if $`C`$ is the selection matrix that extracts the components of `TargetNodes`, each $`W_i(T)`$ is computed as
+the single-input Gramian to the corresponding target nodes projected onto the target part:
+```math
+W_i(T) = C \tilde W_{i}(T) C^\top
+```
+
+- Additional optional input:
+  - `TargetNodes`: indices of target nodes
+    - Type: double vector
+    - Constraint: integer, 1-indexed (if duplicates exist, the implementation uniquifies them while preserving their order of appearance)
+---
+- Output:
+  - $p$: target VCS, target AECS
+    - Type: double vector
+    - Length is `numel(unique(TargetNodes, "stable"))`
+---
+- Usage examples:
+  - `p = vcs(A, T=2.0, TargetNodes=[1 3 5])`
+  - `p = aecs(A, T=2.0, TargetNodes=[1 3 5], Method="integral", Steps=80)`
+  - `[pV, pA] = bothcs(A, T=2.0, TargetNodes=[1 3 5])`
+  - `[pV, pA, infoV, infoA] = bothcs(A, T=2.0, TargetNodes=[1 3 5])`
+
 
 ### 4.2 Class (`CSProblem`)
 
 This class represents the problem setting. \
-When it receives inputs, it computes $`W_1,\ldots,W_n`$ by `gramian.computeGramian`. \
+When it receives inputs, it computes $`W_1,\ldots,W_n`$ by `gramian.computeGramian(A, T, wopts[, TargetNodes])`. \
 VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 
 - Properties:
@@ -207,11 +237,16 @@ VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
   - WOptions: options for $`W`$ computation
     - Type: WOptions scalar
     - Default: WOptions()
+  - TargetNodes: indices of target nodes
+    - Type: double vector
+    - Constraint: integer, 1-indexed (if duplicates exist, the implementation uniquifies them while preserving their order of appearance)
+    - Default: empty (compute full-state CS)
+    - If nonempty, target controllability scores are computed
   - InitialGuess: initial solution
     - Type: double vector
-    - Constraint: size $`n`$ 
-    - Default: $` \frac{1}{n}\boldsymbol{1} `$ 
-    - The given initial solution is projected onto the $`n`$-dimensional standard simplex.
+    - Constraint: size $`n`$ (when `TargetNodes` is specified, the dimension of the target nodes ( $`=m`$ ))
+    - Default: $` \frac{1}{n}\boldsymbol{1} `$ (when `TargetNodes` is specified, normalized by $`m`$)
+    - The given initial solution is projected onto the $`n`$ ( $`m`$ )-dimensional standard simplex.
     - If the initial solution is not feasible (if $`W(p)`$ is singular), that value is returned by `CSProblem.solveVcs` or `CSProblem.solveAecs`, and ExitFlag=-2.
 ---
 - Notes:
@@ -221,6 +256,7 @@ VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 - Usage examples:
   - `prob = CSProblem(A)` ( $`T=\infty`$ )
   - `prob = CSProblem(A, T=t, InitialGuess=p)`
+  - `prob = CSProblem(A, T=t, TargetNodes=[1 3 5])`
 ---
 #### 4.2.2 Main Methods `CSProblem.solveVcs`, `CSProblem.solveAecs`
 - Optional input (passed as Value):
@@ -590,13 +626,17 @@ Implements computation of the controllability Gramian.
     - Constraint: $`T>0`$ 
   - wopts: options for $`W`$ computation
     - Type: WOptions scalar
+  - targetNodes: indices of target nodes (optional)
+    - Type: double vector
+    - Constraint: integer, 1-indexed (if duplicates exist, they are uniquified while preserving their order of appearance)
 ---
 - Output:
   - wlist: WList object that stores the controllability Gramian for the problem
     - Type: WList scalar
 ---
 - Algorithm:
-  - Depending on the values of `T`, `wopts.UseScaling`, and `wopts.Method`, calls one of `gramian.infLyapScale_`, `gramian.infLyapNoscale_`, `gramian.finLyapScale_`, `gramian.finLyapNoscale_`, `gramian.finIntegralScale_`, or `gramian.finIntegralNoscale_` and computes a WList object.
+  - When `targetNodes` is empty, depending on the values of `T`, `wopts.UseScaling`, and `wopts.Method`, calls one of `gramian.infLyapScale_`, `gramian.infLyapNoscale_`, `gramian.finLyapScale_`, `gramian.finLyapNoscale_`, `gramian.finIntegralScale_`, or `gramian.finIntegralNoscale_` and computes a WList object.
+  - When `targetNodes` is nonempty, depending on `wopts.Method`, calls either `gramian.finTargetLyap_` or `gramian.finTargetIntegral_`. Since the case $`T=\infty`$ has not yet been formulated theoretically, it results in an error.
 
 #### 4.9.2 Main Function `gramian.blockDiagonalization_`
 Finds the block diagonalization of the given matrix $`A`$ and its transformation matrix.
@@ -679,7 +719,7 @@ The basic processing flow in this project is as follows.
 1. The user calls `vcs(...)`. \
 Based on the inputs, a `WOptions` object and a `PGSolverOptions` object are generated.
 2. A `CSProblem` object is generated based on the inputs and the `WOptions` object. \
-At that time, $`W_1,\ldots,W_n`$ is computed by `gramian.computeGramian`.
+At that time, $`W_1,\ldots,W_n`$ is computed by `gramian.computeGramian(A, T, wopts)` for full-state scores, or by `gramian.computeGramian(A, T, wopts, targetNodes)` for target controllability scores.
 3. The `PGSolverOptions` object is passed to the `CSProblem` object, and the `solveVcs` method is executed.
 4. A `ProjectedGradientSolver` object is generated, the `PGSolverOptions` object is passed to it, and the `solve` method is executed. \
 At that time, the projected gradient method based on the Armijo condition is executed.
@@ -697,13 +737,10 @@ Basic usage examples are shown below.
     [p, info] = vcs(A, T=t, Method="integral", Steps=50) % Compute the controllability Gramian by numerical integration; info stores information about the computation result
     [pV, pA] = bothcs(A) % Compute both VCS and AECS, avoiding duplicate Gramian computation
     [pV, pA, infoV, infoA] = bothcs(A) % Store information about the computation results for both VCS and AECS
+    pT = vcs(A, T=2.0, TargetNodes=[1 3 5]) % target VCS
+    pTA = aecs(A, T=2.0, TargetNodes=[1 3 5], Method="integral", Steps=80) % target AECS
+    [pTV, pTA] = bothcs(A, T=2.0, TargetNodes=[1 3 5]) % Compute target VCS/AECS simultaneously
 ```
-
-
-## 7. Toward Extension to Target Controllability Scores
-Since the objective function is almost the same as that of the ordinary controllability score, it seems that WList generally does not need to be modified.
-It should be sufficient to modify `gramian.computeGramian`, compute the controllability Gramian and so on for the target controllability score, and then pass them to WList.
-It is unclear whether extension to the infinite time interval is possible.
 
 ## Citation
 
@@ -730,6 +767,13 @@ If you use this source code in a paper, please cite the following references.
   pages={2568--2580},
   year={2025},
   publisher={IEEE}
+}
+
+@article{sato2025target,
+  title={Target Controllability Scores for Actuation-Constrained Network Intervention}, 
+  author={Kazuhiro Sato},
+  journal={arXiv preprint arXiv:2510.13354},
+  year={2025}
 }
 
 @article{umezu2026infinite,
