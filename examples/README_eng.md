@@ -187,7 +187,7 @@ T = 2.0;
     StoreTrace=true);
 ```
 
-For details of the options, see the "4.1 Top-Level Functions (vcs.m, aecs.m, bothcs.m)" section of [README.md][repo-readme].
+For details of the options, see the "4.1 Top-Level Functions (vcs.m, aecs.m, bothcs.m)" section of [README_eng.md][repo-readme].
 
 Also, `UseScaling` is an option that makes computation possible even when the $A$ matrix is unstable. On the other hand, because it computes the Jordan normal form, note that an error may occur when eigenvalues are repeated.
 
