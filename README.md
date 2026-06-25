@@ -54,6 +54,7 @@ project/
 │
 ├─ examples/                % 使用例
 ├─ README.md                % 本ドキュメント
+├─ README_eng.md            % 英語版ドキュメント
 └─ LICENSE                  % ライセンス
 ```
 主な構成要素の役割は以下のとおりである．
@@ -61,7 +62,7 @@ project/
 - `vcs.m`：VCSの計算を行うメイン関数
 - `aecs.m`：AECSの計算を行うメイン関数
 - `bothcs.m`：VCSの計算とAECSの計算を両方行うメイン関数
-- `@CSProlbem`：問題設定を表すクラス
+- `@CSProblem`：問題設定を表すクラス
 - `@CSResult`：計算結果を保持するクラス
 
 ---
@@ -233,8 +234,7 @@ W_i(T) = C \tilde W_{i}(T) C^\top
     - 型　：double scalar
     - 制約： $`T>0`$ 
     - 既定： $`T=\infty`$ 
-    - 第2引数 or Name=Valueで渡す
-    （vcs(A, t) or vcs(A, T=t)）
+    - 第2引数 or Name=Valueで渡す（vcs(A, t) or vcs(A, T=t)）
   - WOptions： $`W`$ 計算用オプション
     - 型　：WOptions scalar
     - 既定：WOptions()
