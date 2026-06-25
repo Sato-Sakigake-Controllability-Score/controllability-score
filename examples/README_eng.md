@@ -140,7 +140,7 @@ infoV =
     Trace: []
 ```
 
-For details of each property, see the "4.6 Class (`CSResult`)" section of [README.md][repo-readme].
+For details of each property, see the "4.6 Class (`CSResult`)" section of [README_eng.md][repo-readme].
 
 The same kind of `info` can also be received from individual functions.
 
