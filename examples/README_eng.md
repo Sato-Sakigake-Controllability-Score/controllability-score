@@ -205,7 +205,7 @@ If you want to run organized examples, use the following scripts. Each section o
 | [`ex05_minimal_graph_bothcs.m`][ex05] | Display an adjacency matrix as a directed graph and compute VCS and AECS from the same matrix |
 
 
-[repo-readme]: ../README.md
+[repo-readme]: ../README_eng.md
 [ex01]: ./ex01_minimal_bothcs.m
 [ex02]: ./ex02_finite_horizon.m
 [ex03]: ./ex03_edge_weight_sweep.m
