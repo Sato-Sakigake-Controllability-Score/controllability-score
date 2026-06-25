@@ -53,7 +53,8 @@ project/
 ├─ +csutil/                 % Common processing
 │
 ├─ examples/                % Usage examples
-├─ README.md                % This document
+├─ README_eng.md            % This document (English)
+├─ README.md                % Documentation (Japanese)
 └─ LICENSE                  % License
 ```
 The roles of the main components are as follows.
