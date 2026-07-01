@@ -93,16 +93,16 @@ project/
 
 - 入力：
   -  $`A`$ ：システム行列
-    - 型　：double matrix
-    - 制約：正方行列
+      - 型　：double matrix
+      - 制約：正方行列
 ---
 - オプション入力 (Name=Valueで渡す)：
   -  $`T`$ ：終端時刻
-    - 型　：double scalar
-    - 制約： $`T>0`$ 
-    - 既定： $`T=\infty`$ 
-    - 第2引数で渡すこともできる
-    （vcs(A, t) or vcs(A, T=t)）
+      - 型　：double scalar
+      - 制約： $`T>0`$ 
+      - 既定： $`T=\infty`$ 
+      - 第2引数で渡すこともできる
+      （vcs(A, t) or vcs(A, T=t)）
   - CSOptions： $`W`$ 計算および最適化用オプション
     - 型　：CSOptions scalar
     - 以下のオプション入力があれば上書きされる
@@ -164,8 +164,8 @@ project/
 ---
 - 出力：
   -  $`p`$ ：VCS，AECS
-    - 型　：double vector
-    -  $`A`$ と同じサイズ
+      - 型　：double vector
+      -  $`A`$ と同じサイズ
 ---
 - オプション出力：
   - info：最適化結果
@@ -226,15 +226,15 @@ W_i(T) = C \tilde W_{i}(T) C^\top
 #### 4.2.1 コンストラクタ `obj = CSProblem(A, varargin)`
 - 入力：
   -  $`A`$ ：システム行列
-    - 型　：double matrix
-    - 制約：正方行列
+      - 型　：double matrix
+      - 制約：正方行列
 ---
 - オプション入力 (Name=Valueで渡す)：
   -  $`T`$ ：終端時刻
-    - 型　：double scalar
-    - 制約： $`T>0`$ 
-    - 既定： $`T=\infty`$ 
-    - 第2引数 or Name=Valueで渡す（vcs(A, t) or vcs(A, T=t)）
+      - 型　：double scalar
+      - 制約： $`T>0`$ 
+      - 既定： $`T=\infty`$ 
+      - 第2引数 or Name=Valueで渡す（vcs(A, t) or vcs(A, T=t)）
   - WOptions： $`W`$ 計算用オプション
     - 型　：WOptions scalar
     - 既定：WOptions()
@@ -268,8 +268,8 @@ W_i(T) = C \tilde W_{i}(T) C^\top
 ---
 - 出力：
   -  $`p`$ ：VCS，AECS
-    - 型　：double vector
-    -  $`A`$ と同じサイズ
+      - 型　：double vector
+      -  $`A`$ と同じサイズ
 ---
 - オプション出力：
   - info：最適化結果
@@ -623,11 +623,11 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 #### 4.9.1 主な関数 `gramian.computeGramian`
 - 入力：
   -  $`A`$ ：システム行列
-    - 型　：double matrix
-    - 制約：正方行列
+      - 型　：double matrix
+      - 制約：正方行列
   -  $`T`$ ：終端時刻
-    - 型　：double scalar
-    - 制約： $`T>0`$ 
+      - 型　：double scalar
+      - 制約： $`T>0`$ 
   - wopts： $`W`$ 計算用オプション
     - 型　：WOptions scalar
   - targetNodes: ターゲットノードの添字（省略可）
@@ -655,8 +655,8 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 とブロック対角化する．
 - 入力：
   -  $`A`$ ：システム行列
-    - 型　：double matrix
-    - 制約：正方行列
+      - 型　：double matrix
+      - 制約：正方行列
   - wopts： $`W`$ 計算用オプション
     - 型　：WOptions scalar
 - 注意：

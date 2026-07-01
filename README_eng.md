@@ -92,84 +92,84 @@ Since $`W_1,\ldots,W_n`$ is computed all at once at the beginning of the algorit
 After generating a `CSProblem` object, VCS and AECS are computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 
 - Input:
-  -  $`A`$ : system matrix
-    - Type: double matrix
-    - Constraint: square matrix
+  -  `A` : system matrix
+      - Type: double
+      - Constraint: square matrix
 ---
 - Optional inputs (passed as Name=Value):
-  -  $`T`$ : terminal time
-    - Type: double scalar
-    - Constraint: $`T>0`$ 
-    - Default: $`T=\infty`$ 
-    - It can also be passed as the second argument
-    (`vcs(A, t)` or `vcs(A, T=t)`)
-  - CSOptions: options for $`W`$ computation and optimization
+  -  `T` : terminal time
+      - Type: double
+      - Constraint: $`T>0`$ 
+      - Default: $`T=\infty`$ 
+      - It can also be passed as the second argument
+      (`vcs(A, t)` or `vcs(A, T=t)`)
+  - `CSOptions`: options for $`W`$ computation and optimization
     - Type: CSOptions scalar
     - Overwritten if the following optional inputs are provided
   ---
-  - Method: computation method
-    - Type: string scalar or char vector
+  - `Method`: computation method
+    - Type: string or char vector
     - Constraint: "lyap" or "integral"
     - Default: "lyap"
-  - Steps: number of grid points (for numerical integration)
-    - Type: double scalar
+  - `Steps`: number of grid points (for numerical integration)
+    - Type: double
     - Constraint: integer, $` \geq0 `$ 
     - Default: $`0 `$ 
-  - UseScaling: whether to use scaling
-    - Type: logical scalar or double scalar
+  - `UseScaling`: whether to use scaling
+    - Type: logical or double
     - Constraint: $`0`$  or  $`1`$  (if double)
     - Default: true
-  - EigTol: threshold (for eigenvalue computation)
-    - Type: double scalar
+  - `EigTol`: threshold (for eigenvalue computation)
+    - Type: double
     - Constraint: $` \geq0 `$ 
     - Default: $` 10^{-12} `$ 
-  - WOptions: options for $`W`$ computation
-    - Type: WOptions scalar
+  - `WOptions`: options for $`W`$ computation
+    - Type: WOptions
     - Overwritten if Method, Steps, UseScaling, or EigTol is provided
   ---
-  - StepSize: optimization step size
-    - Type: double scalar
+  - `StepSize`: optimization step size
+    - Type: double
     - Constraint: $` >0 `$ 
     - Default: $` 0.1 `$ 
-  - StepSizeInf: lower bound of optimization step size
-    - Type: double scalar
+  - `StepSizeInf`: lower bound of optimization step size
+    - Type: double
     - Constraint: $` >0 `$ 
     - Default: $` 10^{-12} `$ 
-  - MaxIter: maximum number of iterations (optimization)
-    - Type: double scalar
+  - `MaxIter`: maximum number of iterations (optimization)
+    - Type: double
     - Constraint: integer, $` >0 `$ 
     - Default: 1000
-  - Tol: threshold (for convergence judgment)
-    - Type: double scalar
+  - `Tol`: threshold (for convergence judgment)
+    - Type: double
     - Constraint: $` >0 `$ 
     - Default: $` 10^{-8} `$ 
-  - Rho: parameter for backtracking
-    - Type: double scalar
+  - `Rho`: parameter for backtracking
+    - Type: double
     - Constraint: $` >0 `$ , $` <1 `$ 
     - Default: $` 0.5 `$ 
-  - Sigma: parameter for the Armijo condition
-    - Type: double scalar
+  - `Sigma`: parameter for the Armijo condition
+    - Type: double
     - Constraint: $` >0 `$ , $` <1 `$ 
     - Default: $` 10^{-4} `$ 
-  - Verbose: whether to display progress
-    - Type: logical scalar
+  - `Verbose`: whether to display progress
+    - Type: logical
     - Default: false
-  - StoreTrace: whether to store intermediate results
-    - Type: logical scalar
+  - `StoreTrace`: whether to store intermediate results
+    - Type: logical
     - Default: false
-  - SolverOptions: options for optimization
-    - Type: PGSolverOptions scalar
+  - `SolverOptions`: options for optimization
+    - Type: PGSolverOptions
     - Overwritten if StepSize, StepSizeInf, MaxIter, Tol, Rho, Sigma, Verbose, StoreTrace, or SolverOptions is provided
 ---
 ---
 - Output:
-  -  $`p`$ : VCS, AECS
-    - Type: double vector
-    - Same size as $`A`$
+  -  `p` : VCS, AECS
+      - Type: double vector
+      - Same size as $`A`$
 ---
 - Optional output:
-  - info: optimization result
-    - Type: CSResult scalar
+  - `info`: optimization result
+    - Type: CSResult
 ---
 ---
 - Usage examples:
@@ -197,7 +197,7 @@ W_i(T) = C \tilde W_{i}(T) C^\top
     - Constraint: integer, 1-indexed (if duplicates exist, the implementation uniquifies them while preserving their order of appearance)
 ---
 - Output:
-  - $p$: target VCS, target AECS
+  - `p`: target VCS, target AECS
     - Type: double vector
     - Length is `numel(unique(TargetNodes, "stable"))`
 ---
@@ -215,35 +215,35 @@ When it receives inputs, it computes $`W_1,\ldots,W_n`$ by `gramian.computeGrami
 VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 
 - Properties:
-  - WList: container for $`W_1,\ldots,W_n`$ and computation of $`f(W(p))`$
-    - Type: WList scalar
-  - Dimension: dimension of the problem ( $`=n`$ )
-    - Type: double scalar
-  - InitialGuess: initial solution
+  - `WList`: container for $`W_1,\ldots,W_n`$ and computation of $`f(W(p))`$
+    - Type: WList
+  - `Dimension`: dimension of the problem ( $`=n`$ )
+    - Type: double
+  - `InitialGuess`: initial solution
     - Type: double vector
 ---
 #### 4.2.1 Constructor `obj = CSProblem(A, varargin)`
 - Input:
-  -  $`A`$ : system matrix
-    - Type: double matrix
-    - Constraint: square matrix
+  -  `A` : system matrix
+      - Type: double matrix
+      - Constraint: square matrix
 ---
 - Optional inputs (passed as Name=Value):
-  -  $`T`$ : terminal time
-    - Type: double scalar
-    - Constraint: $`T>0`$ 
-    - Default: $`T=\infty`$ 
-    - Passed as the second argument or as Name=Value
-    (`vcs(A, t)` or `vcs(A, T=t)`)
-  - WOptions: options for $`W`$ computation
-    - Type: WOptions scalar
+  -  `T` : terminal time
+      - Type: double
+      - Constraint: $`T>0`$ 
+      - Default: $`T=\infty`$ 
+      - Passed as the second argument or as Name=Value
+      (`vcs(A, t)` or `vcs(A, T=t)`)
+  - `WOptions`: options for $`W`$ computation
+    - Type: WOptions
     - Default: WOptions()
-  - TargetNodes: indices of target nodes
+  - `TargetNodes`: indices of target nodes
     - Type: double vector
     - Constraint: integer, 1-indexed (if duplicates exist, the implementation uniquifies them while preserving their order of appearance)
     - Default: empty (compute full-state CS)
     - If nonempty, target controllability scores are computed
-  - InitialGuess: initial solution
+  - `InitialGuess`: initial solution
     - Type: double vector
     - Constraint: size $`n`$ (when `TargetNodes` is specified, the dimension of the target nodes ( $`=m`$ ))
     - Default: $` \frac{1}{n}\boldsymbol{1} `$ (when `TargetNodes` is specified, normalized by $`m`$)
@@ -261,19 +261,19 @@ VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 ---
 #### 4.2.2 Main Methods `CSProblem.solveVcs`, `CSProblem.solveAecs`
 - Optional input (passed as Value):
-  - solopts: solver options
-    - Type: PGSolverOptions scalar
+  - `solopts`: solver options
+    - Type: PGSolverOptions
     - Default: PGSolverOptions()
 ---
 ---
 - Output:
-  -  $`p`$ : VCS, AECS
+  - `p` : VCS, AECS
     - Type: double vector
     - Same size as $`A`$
 ---
 - Optional output:
-  - info: optimization result
-    - Type: CSResult scalar
+  - `info`: optimization result
+    - Type: CSResult
 ---
 ---
 - Usage examples:
@@ -291,11 +291,11 @@ Its main properties include WOptions and SolverOptions. \
 The properties of WOptions and SolverOptions can also be modified directly. (See 4.3.1 and 4.3.2.)
 
 - Main properties:
-  - WOptions: options for $`W`$ computation
-    - Type: WOptions scalar
+  - `WOptions`: options for $`W`$ computation
+    - Type: WOptions
     - Overwritten if Method, Steps, UseScaling, or EigTol is assigned
-  - SolverOptions: options for optimization
-    - Type: PGSolverOptions scalar
+  - `SolverOptions`: options for optimization
+    - Type: PGSolverOptions
     - Overwritten if StepSize, StepSizeInf, MaxIter, Tol, Rho, Sigma, Verbose, StoreTrace, or SolverOptions is assigned
 - Dependent properties:
   - Properties of WOptions and SolverOptions
@@ -303,12 +303,12 @@ The properties of WOptions and SolverOptions can also be modified directly. (See
 ---
 #### 4.3.1 Constructor `obj = CSOptions(varargin)`
 - Optional inputs (passed as Name=Value):
-  - Method, Steps, UseScaling, EigTol: same as the top-level functions
-  - WOptions: same as the top-level functions
+  - `Method`, `Steps`, `UseScaling`, `EigTol`: same as the top-level functions
+  - `WOptions`: same as the top-level functions
     - Overwritten if Method, Steps, UseScaling, or EigTol is provided
   ---
-  - StepSize, StepSizeInf, MaxIter, Tol, Rho, Sigma, Verbose, StoreTrace: same as the top-level functions
-  - SolverOptions: same as the top-level functions
+  - `StepSize`, `StepSizeInf`, `MaxIter`, `Tol`, `Rho`, `Sigma`, `Verbose`, `StoreTrace`: same as the top-level functions
+  - `SolverOptions`: same as the top-level functions
     - Overwritten if StepSize, StepSizeInf, MaxIter, Tol, Rho, Sigma, Verbose, StoreTrace, or SolverOptions is provided
 ---
 ---
@@ -327,28 +327,28 @@ When actually computing $`W_1,\ldots,W_n`$, it calls `gramian.computeGramian`. \
 After computing $`W_1,\ldots,W_n`$, they are stored in a `WList` object, and the necessary computations are performed by its methods.
 
 - Properties:
-  - Method: computation method
-    - Type: string scalar or char vector
+  - `Method`: computation method
+    - Type: string or char vector
     - Constraint: "lyap" or "integral"
     - Default: "lyap"
-  - Steps: number of grid points (for numerical integration)
-    - Type: double scalar
+  - `Steps`: number of grid points (for numerical integration)
+    - Type: double
     - Constraint: integer, $`\geq 0`$ 
     - Default: $`0`$ 
-  - UseScaling: whether to use scaling
-    - Type: logical scalar or double scalar
+  - `UseScaling`: whether to use scaling
+    - Type: logical or double
     - Constraint: $`0`$  or  $`1`$  (if double)
     - Default: true
-  - EigTol: threshold (for eigenvalue computation)
-    - Type: double scalar
+  - `EigTol`: threshold (for eigenvalue computation)
+    - Type: double
     - Constraint: $`\geq 0`$ 
     - Default: $`10^{-12}`$ 
 ---
 - Property dependencies:
-  - Method and Steps
+  - `Method` and `Steps`
     - When Method="lyap", calling WOptions.Steps returns $`0`$. (The original numerical value is retained internally.)
     - An error occurs if `gramian.computeGramian` is executed with Method="integral" and Steps=0.
-  - UseScaling and EigTol
+  - `UseScaling` and `EigTol`
     - When UseScaling=false, calling WOptions.EigTol returns $`0`$. (The original numerical value is retained internally.)
 
 ### 4.5 Class (`PGSolverOptions`)
@@ -356,127 +356,127 @@ This class manages the options required for executing optimization. \
 When actually performing optimization, it calls `ProjectedGradientSolver.solve`. \
 The computation result is stored in `CSResult`.
 - Properties:
-  - StepSize: optimization step size
-    - Type: double scalar
+  - `StepSize`: optimization step size
+    - Type: double
     - Constraint: $`>0`$ 
     - Default: $`0.1`$ 
-  - StepSizeInf: lower bound of optimization step size
-    - Type: double scalar
+  - `StepSizeInf`: lower bound of optimization step size
+    - Type: double
     - Constraint: $`>0`$ 
     - Default: $`10^{-12}`$ 
-  - MaxIter: maximum number of iterations (optimization)
-    - Type: double scalar
+  - `MaxIter`: maximum number of iterations (optimization)
+    - Type: double
     - Constraint: integer, $`>0`$ 
     - Default: 1000
-  - Tol: threshold (for convergence judgment)
-    - Type: double scalar
+  - `Tol`: threshold (for convergence judgment)
+    - Type: double
     - Constraint: $`>0`$ 
     - Default: $`10^{-8}`$ 
-  - Rho: parameter for backtracking
-    - Type: double scalar
+  - `Rho`: parameter for backtracking
+    - Type: double
     - Constraint: $`>0`$ , $`<1`$ 
     - Default: $`0.5`$ 
-  - Sigma: parameter for the Armijo condition
-    - Type: double scalar
+  - `Sigma`: parameter for the Armijo condition
+    - Type: double
     - Constraint: $`>0`$ , $`<1`$ 
     - Default: $`10^{-4}`$ 
-  - Verbose: whether to display progress
-    - Type: logical scalar
+  - `Verbose`: whether to display progress
+    - Type: logical
     - Default: false
-  - StoreTrace: whether to store intermediate results
-    - Type: logical scalar
+  - `StoreTrace`: whether to store intermediate results
+    - Type: logical
     - Default: false
 
 ### 4.6 Class (`CSResult`)
 This class stores the computation results of optimization. \
 When actually performing optimization, it calls `ProjectedGradientSolver.solve`. 
 - Properties:
-  - ObjectiveValue: objective function value at termination
-    - Type: double scalar
-  - Gradient: gradient at termination (because this is a projected gradient method, it does not become $`\boldsymbol{0}`$)
+  - `ObjectiveValue`: objective function value at termination
+    - Type: double
+  - `Gradient`: gradient at termination (because this is a projected gradient method, it does not become $`\boldsymbol{0}`$)
     - Type: double vector
-  - GradNorm: norm of the gradient at termination (because this is a projected gradient method, it does not become $`0`$)
-    - Type: double scalar
-  - StepNorm: norm of the update width at termination (used for the convergence judgment condition)
-    - Type: double scalar
-  - Iterations: number of iterations
-    - Type: double scalar
-  - FuncCount: number of objective function evaluations
-    - Type: double scalar
-  - Converged: whether convergence occurred
-    - Type: logical scalar
-  - ExitFlag: reason for termination
-    - Type: double scalar
+  - `GradNorm`: norm of the gradient at termination (because this is a projected gradient method, it does not become $`0`$)
+    - Type: double
+  - `StepNorm`: norm of the update width at termination (used for the convergence judgment condition)
+    - Type: double
+  - `Iterations`: number of iterations
+    - Type: double
+  - `FuncCount`: number of objective function evaluations
+    - Type: double
+  - `Converged`: whether convergence occurred
+    - Type: logical
+  - `ExitFlag`: reason for termination
+    - Type: double
     - Constraint: integer
       - 1: converged (update width $`<`$ threshold)
       - 0: maximum number of updates reached
       - -1: terminated because the Armijo condition was not satisfied
       - -2: terminated because the initial point was not in the feasible region ( $`W(p)`$ did not become positive definite)
       - -3: terminated because the point accepted by the Armijo condition was outside the feasible region (exceptional)
-  - ExitMessage: termination message
-    - Type: string scalar
-  - Algorithm: algorithm used
-    - Type: string scalar
+  - `ExitMessage`: termination message
+    - Type: string
+  - `Algorithm`: algorithm used
+    - Type: string
     - "ProjectedGradient (Armijo, projection arc)" (currently unnecessary; to be changed when extended)
-  - SolverOptions: options used
-    - Type: PGSolverOptions scalar
-  - ProblemInfo: information about the problem (currently unnecessary; to be changed when extended)
+  - `SolverOptions`: options used
+    - Type: PGSolverOptions
+  - `ProblemInfo`: information about the problem (currently unnecessary; to be changed when extended)
     - Type: struct
-  - Trace: stores information about progress
+  - `Trace`: stores information about progress
     - Type: struct
     - Stores intermediate numerical information when StoreTrace=true
-      - Iteration
-      - Fval
-      - StepNorm
-      - Alpha
-      - FuncCount
+      - `Iteration`
+      - `Fval`
+      - `StepNorm`
+      - `Alpha`
+      - `FuncCount`
 
 ### 4.7 Class (`ProjectedGradientSolver`)
 This class is for the optimization solver. \
 By providing an objective function and an initial point and calling the `solve` method, the projected gradient method is executed.
 - Properties:
-  - StepSize: optimization step size
-    - Type: double scalar
+  - `StepSize`: optimization step size
+    - Type: double
     - Constraint: $`>0`$ 
     - Default: $`0.1`$ 
-  - StepSizeInf: lower bound of optimization step size
-    - Type: double scalar
+  - `StepSizeInf`: lower bound of optimization step size
+    - Type: double
     - Constraint: $`>0`$ 
     - Default: $`10^{-12}`$ 
-  - MaxIter: maximum number of iterations (optimization)
-    - Type: double scalar
+  - `MaxIter`: maximum number of iterations (optimization)
+    - Type: double
     - Constraint: integer, $`>0`$ 
     - Default: 1000
-  - Tol: threshold (for convergence judgment)
-    - Type: double scalar
+  - `Tol`: threshold (for convergence judgment)
+    - Type: double
     - Constraint: $`>0`$ 
     - Default: $`10^{-8}`$ 
-  - Rho: parameter for backtracking
-    - Type: double scalar
+  - `Rho`: parameter for backtracking
+    - Type: double
     - Constraint: $`>0`$ , $`<1`$ 
     - Default: $`0.5`$ 
-  - Sigma: parameter for the Armijo condition
-    - Type: double scalar
+  - `Sigma`: parameter for the Armijo condition
+    - Type: double
     - Constraint: $`>0`$ , $`<1`$ 
     - Default: $`10^{-4}`$ 
-  - Verbose: whether to display progress
-    - Type: logical scalar
+  - `Verbose`: whether to display progress
+    - Type: logical
     - Default: false
-  - StoreTrace: whether to store intermediate results
-    - Type: logical scalar
+  - `StoreTrace`: whether to store intermediate results
+    - Type: logical
     - Default: false
 #### 4.7.1 Main Method `ProjectedGradientSolver.solve`
 - Input:
-  - fun: objective function
+  - `fun`: objective function
     - Type: function handle
-  - p0: initial solution
+  - `p0`: initial solution
     - Type: double vector
 ---
 ---
 - Output:
-  - p: optimal solution
+  - `p`: optimal solution
     - Type: double vector
-  - info: computation result
+  - `info`: computation result
     - Type: CSResult
 ---
 
@@ -485,7 +485,7 @@ This class stores the array of $`W_1,\ldots,W_n`$ and performs related computati
 When scaling is performed, it stores the scaled controllability Gramian. \
 By giving a point $`p`$ and calling the `evalVcs` and `evalAecs` methods, the objective function and its gradient can be evaluated.
 - Properties:
-  - $`W`$ : array of controllability Gramians
+  - `W` : array of controllability Gramians
     - Type: cell vector
     - It is a cell array consisting of $`n`$ elements, and each element is also a cell array.
     - When $`W_1,\ldots,W_n`$ has a block diagonal matrix structure, the corresponding element of `W` stores each diagonal block.
@@ -494,29 +494,29 @@ By giving a point $`p`$ and calling the `evalVcs` and `evalAecs` methods, the ob
     - `W{1}`, ..., `W{n}` must have the same size.
     - The elements of `W{1}`, ..., `W{n}` at the same positions must be real square matrices with the same size.
     - The constraints satisfied by each element are verified by executing `validateWList_`.
-  -  $`Q`$ : coordinate transformation matrix
-    - Type: double matrix or []
-    - When scaling is performed, this represents a matrix such that $`Q^{-1}AQ`$ becomes a block diagonal matrix.
-    - If `CSOptions.WOptions.UseScaling` is `false`, or if $`A`$ does not need to be block-diagonalized, it stores `[]`.
-  -  $`S_\mathrm{a}`$ : constant matrix used for AECS function evaluation
-    - Type: cell vector
-    - `Sa` represents $`D^{-1}Q^{-1}Q^{-\top}D^{-\top}`$.
-      However, what is needed for objective function evaluation is only the block diagonal part with the same block diagonal structure as $`W(p)`$.
-      Therefore, `Sa` has the block diagonal elements as each cell element. The specific definitions of $`D, Q`$ are explained near the end of this section.
-    - If `CSOptions.WOptions.UseScaling` is `false`, or if $`A`$ does not need to be block-diagonalized, it stores a cell array consisting of `[]`.
-    - Constraints related to size and so on are verified by executing `validateWList_`.
-  - vcsBlocks, aecsBlocks: arrays representing the block positions used for objective function evaluation
+  -  `Q` : coordinate transformation matrix
+      - Type: double matrix or []
+      - When scaling is performed, this represents a matrix such that $`Q^{-1}AQ`$ becomes a block diagonal matrix.
+      - If `CSOptions.WOptions.UseScaling` is `false`, or if $`A`$ does not need to be block-diagonalized, it stores `[]`.
+  -  `Sa` : constant matrix used for AECS function evaluation
+      - Type: cell vector
+      - `Sa` represents $`D^{-1}Q^{-1}Q^{-\top}D^{-\top}`$.
+        However, what is needed for objective function evaluation is only the block diagonal part with the same block diagonal structure as $`W(p)`$.
+        Therefore, `Sa` has the block diagonal elements as each cell element. The specific definitions of $`D, Q`$ are explained near the end of this section.
+      - If `CSOptions.WOptions.UseScaling` is `false`, or if $`A`$ does not need to be block-diagonalized, it stores a cell array consisting of `[]`.
+      - Constraints related to size and so on are verified by executing `validateWList_`.
+  - `vcsBlocks`, `aecsBlocks`: arrays representing the block positions used for objective function evaluation
     - Type: double vector
     - Since VCS uses all blocks and AECS uses only the upper-left block, this is explicitly indicated. (Currently it is unnecessary to store this as a property; to be changed when extended.)
-  - blockSizes: size of each block diagonal matrix
+  - `blockSizes`: size of each block diagonal matrix
     - Type: double vector
-  - n: dimension of the problem
-    - Type: double scalar
-  - nb: number of block diagonal elements
-    - Type: double scalar
+  - `n`: dimension of the problem
+    - Type: double
+  - `nb`: number of block diagonal elements
+    - Type: double
     - In this example, it represents $`\ell`$.
-  - WOptions: options used for $`W`$ computation
-    - Type: WOptions scalar
+  - `WOptions`: options used for $`W`$ computation
+    - Type: WOptions
 
 For example, when there is a block structure
 
@@ -573,15 +573,15 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 
 #### 4.8.1 Main Method `WList.evalVcs`
 - Input:
-  -  $`p`$ : point at which to evaluate the objective function
+  - `p` : point at which to evaluate the objective function
     - Type: double vector
 ---
 - Output:
-  -  $`f`$ : objective function value of VCS $`f_{\mathrm{VCS}}(p)`$ 
+  - `f` : objective function value of VCS $`f_{\mathrm{VCS}}(p)`$ 
     - Type: double scalar
 ---
 - Optional output:
-  -  $`g`$ : gradient of the VCS objective function $`\nabla f_{\mathrm{VCS}}(p)`$ 
+  - `g` : gradient of the VCS objective function $`\nabla f_{\mathrm{VCS}}(p)`$ 
     - Type: double vector
 ---
 ---
@@ -595,15 +595,15 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 
 #### 4.8.2 Main Method `WList.evalAecs`
 - Input:
-  -  $`p`$ : point at which to evaluate the objective function
+  - `p` : point at which to evaluate the objective function
     - Type: double vector
 ---
 - Output:
-  -  $`f`$ : objective function value of AECS $`f_{\mathrm{AECS}}(p)`$ 
+  - `f` : objective function value of AECS $`f_{\mathrm{AECS}}(p)`$ 
     - Type: double scalar
 ---
 - Optional output:
-  -  $`g`$ : gradient of the AECS objective function $`\nabla f_{\mathrm{AECS}}(p)`$ 
+  -  `g` : gradient of the AECS objective function $`\nabla f_{\mathrm{AECS}}(p)`$ 
     - Type: double vector
 ---
 ---
@@ -619,20 +619,20 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 Implements computation of the controllability Gramian.
 #### 4.9.1 Main Function `gramian.computeGramian`
 - Input:
-  -  $`A`$ : system matrix
+  - `A` : system matrix
     - Type: double matrix
     - Constraint: square matrix
-  -  $`T`$ : terminal time
-    - Type: double scalar
+  - `T` : terminal time
+    - Type: double
     - Constraint: $`T>0`$ 
-  - wopts: options for $`W`$ computation
-    - Type: WOptions scalar
-  - targetNodes: indices of target nodes (optional)
+  - `wopts`: options for $`W`$ computation
+    - Type: WOptions
+  - `targetNodes`: indices of target nodes (optional)
     - Type: double vector
     - Constraint: integer, 1-indexed (if duplicates exist, they are uniquified while preserving their order of appearance)
 ---
 - Output:
-  - wlist: WList object that stores the controllability Gramian for the problem
+  - `wlist`: WList object that stores the controllability Gramian for the problem
     - Type: WList scalar
 ---
 - Algorithm:
@@ -651,11 +651,11 @@ Finds the block diagonalization of the given matrix $`A`$ and its transformation
  ```
 It block-diagonalizes as above.
 - Input:
-  -  $`A`$ : system matrix
+  - `A` : system matrix
     - Type: double matrix
     - Constraint: square matrix
-  - wopts: options for $`W`$ computation
-    - Type: WOptions scalar
+  - `wopts`: options for $`W`$ computation
+    - Type: WOptions
 - Notes:
   - In eigenvalue separation, wopts.EigTol is used as the threshold.
   - Eigenvalues whose absolute value is less than wopts.EigTol are judged to be eigenvalues on the imaginary axis.
