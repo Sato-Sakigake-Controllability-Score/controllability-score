@@ -277,8 +277,8 @@ VCS and AECS can be computed by `CSProblem.solveVcs` and `CSProblem.solveAecs`.
 ---
 ---
 - Usage examples:
-  - `prob.solveVcs`
-  - `p = prob.solveVcs`
+  - `prob.solveVcs()`
+  - `p = prob.solveVcs()`
   - `[p, info] = prob.solveVcs(solopts)`
 ---
 #### 4.2.3 Function Value Evaluation Methods `CSProblem.fVcs`, `CSProblem.gradVcs`, `CSProblem.fAecs`, `CSProblem.gradAecs`
@@ -514,7 +514,7 @@ By giving a point $`p`$ and calling the `evalVcs` and `evalAecs` methods, the ob
     - Type: double
   - `nb`: number of block diagonal elements
     - Type: double
-    - In this example, it represents $`\ell`$.
+    - In the following example, it represents $`\ell`$.
   - `WOptions`: options used for $`W`$ computation
     - Type: WOptions
 
@@ -587,7 +587,7 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 ---
 - Usage examples:
   - `f = wlist.evalVcs(p)`
-  - `[f, g] = wlist.solveVcs(p)`
+  - `[f, g] = wlist.evalVcs(p)`
 ---
 - Algorithm:
   - Performs eigenvalue decomposition of $`W(p)`$ and determines whether a matrix is symmetric positive definite and computes $`\log\det W(p)`$.
@@ -609,7 +609,7 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
 ---
 - Usage examples:
   - `f = wlist.evalAecs(p)`
-  - `[f, g] = wlist.solveAecs(p)`
+  - `[f, g] = wlist.evalAecs(p)`
 ---
 - Algorithm:
   - Performs eigenvalue decomposition of $`W(p)`$ and determines whether a matrix is symmetric positive definite and computes $`\mathrm{tr}\left(W(p)^{-1}\right)`$.
