@@ -1,5 +1,14 @@
 # 使用例
 
+<table>
+    <thead>
+        <tr>
+            <th style="text-align:center"><a href="README_eng.md">English</a></th>
+            <th style="text-align:center">日本語</th>
+        </tr>
+    </thead>
+</table>
+
 この README は，controllability score の使い方をMATLABのコードで順に確認するためのガイドである．
 
 `ex01_*.m` から `ex05_*.m` までのファイルは，ここで説明する使い方をまとまった形で実行できる参考スクリプトとして置いている．
