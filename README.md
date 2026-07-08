@@ -281,7 +281,7 @@ W_i(T) = C \tilde W_{i}(T) C^\top
 ---
 #### 4.2.2 主なメソッド `CSProblem.solveVcs`,`CSProblem.solveAecs`
 - オプション入力 (Valueで渡す)：
-  - `solopts`：システム行列
+  - `solopts`：最適化用オプション
     - 型　：`PGSolverOptions` scalar
     - 既定：`PGSolverOptions()`
 ---
