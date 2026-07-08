@@ -119,8 +119,8 @@ project/
 - オプション入力 (Name=Valueで渡す)：
   - `T` ：終端時刻
       - 型　：double scalar
-      - 制約： $`>0`$ 
-      - 既定： $`\infty`$ 
+      - 制約： $`T>0`$ 
+      - 既定： $`T=\infty`$
       - 第2引数で渡すこともできる
       （`vcs(A, t)` or `vcs(A, T=t)`）
   - `CSOptions`： $`W`$ 計算および最適化用オプション
