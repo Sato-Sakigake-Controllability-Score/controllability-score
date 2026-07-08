@@ -17,6 +17,27 @@ It mainly takes a system matrix $`A`$ and a terminal time $`T`$ as inputs and ou
 In addition, target controllability scores
 (target VCS, target AECS) can be computed by `vcs`, `aecs`, and `bothcs` with the `TargetNodes` option.
 
+### Interpretation of Controllability and Observability Scores
+
+The controllability score is a new metric that introduces a virtual framework in which state nodes and input nodes correspond one-to-one, and quantitatively evaluates “which nodes should be intervened in, and with what weights, in order to control the entire system most effectively.” Moreover, the controllability score provides information not only about “ease of control,” but also about vulnerability to noise or disturbances, and can serve as a clue for investigating which nodes are important or vulnerable with respect to noise.
+
+Furthermore, as a dual concept of the controllability score, one can consider an observability score. The observability score is a metric that indicates, for the system
+
+```math
+\frac{dx}{dt}=Ax
+```
+
+which state nodes should be observed in order to make it easier to understand the entire state. This can be computed by replacing the system matrix $`A`$ used in the controllability score computation with $`A^\top`$. In other words, in this program, the observability score can be computed by passing `A.'`, for example, as follows.
+
+```matlab
+pObsV = vcs(A.');
+pObsA = aecs(A.');
+[pObsV, pObsA] = bothcs(A.');
+```
+
+Here, `A.'` denotes the transpose in MATLAB.
+
+
 ### Operating Environment
 - MATLAB version: R2024a or later
 - Required toolbox: Control System Toolbox
