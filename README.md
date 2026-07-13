@@ -112,15 +112,15 @@ project/
 `CSProblem`オブジェクトを生成したのち，`CSProblem.solveVcs`, `CSProblem.solveAecs`によってVCS，AECSを計算する．
 
 - 入力：
-  -  $`A`$ ：システム行列
+  - `A` ：システム行列
       - 型　：double matrix
       - 制約：正方行列
 ---
 - オプション入力 (Name=Valueで渡す)：
   - `T` ：終端時刻
       - 型　：double scalar
-      - 制約： $`T>0`$ 
-      - 既定： $`T=\infty`$
+      - 制約： $`>0`$ 
+      - 既定： $`=\infty`$
       - 第2引数で渡すこともできる
       （`vcs(A, t)` or `vcs(A, T=t)`）
   - `CSOptions`： $`W`$ 計算および最適化用オプション
@@ -185,7 +185,7 @@ project/
 - 出力：
   - `p` ：VCS，AECS
       - 型　：double vector
-      -  $`A`$ と同じサイズ
+      - `A` と同じサイズ
 ---
 - オプション出力：
   - `info`：最適化結果
@@ -252,8 +252,8 @@ W_i(T) = C \tilde W_{i}(T) C^\top
 - オプション入力 (Name=Valueで渡す)：
   - `T` ：終端時刻
       - 型　：double scalar
-      - 制約： $`T>0`$ 
-      - 既定： $`T=\infty`$ 
+      - 制約： $`>0`$ 
+      - 既定： $`=\infty`$ 
       - 第2引数 or Name=Valueで渡す（`vcs(A, t)` or `vcs(A, T=t)`）
   - `WOptions`： $`W`$ 計算用オプション
     - 型　：`WOptions` scalar
@@ -647,7 +647,7 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
       - 制約：正方行列
   - `T` ：終端時刻
       - 型　：double scalar
-      - 制約： $`T>0`$ 
+      - 制約： $`>0`$ 
   - `wopts`： $`W`$ 計算用オプション
     - 型　：`WOptions` scalar
   - `targetNodes`: ターゲットノードの添字（省略可）
