@@ -1,5 +1,5 @@
 % ex01_minimal_bothcs.m
-% Basic example for computing vcs and aecs.
+% Basic example for computing VCS and AECS.
 % Use bothcs to compute both weights at once, and compare with separate calls.
 % Also display solver output.
 
