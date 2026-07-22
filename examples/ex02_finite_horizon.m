@@ -1,5 +1,5 @@
 % ex02_finite_horizon.m
-% 様々な有限時間ホライズン T に対する VCS と AECS の比較
+% Compare VCS and AECS for several finite time horizons T.
 
 clear;
 clc;

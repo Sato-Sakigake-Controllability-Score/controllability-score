@@ -1,5 +1,6 @@
 % ex05_minimal_graph_bothcs.m
-% 隣接行列を有向グラフとして表示し，同じ行列から VCS と AECS を計算する最小例
+% Minimal example that displays an adjacency matrix as a directed graph
+% and computes VCS and AECS from the same matrix.
 
 clear;
 clc;
