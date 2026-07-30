@@ -1,24 +1,13 @@
 % +cscore/+gramian/finLyapNoscale_.m
 function wlist = finLyapNoscale_(A, T, wopts)
     n = size(A, 1);
-    eAT = expm(T * A);
 
     W = cell(n, 1);
+    I = eye(n, 'like', A);
 
-    switch wopts.Method
-        case "lyap"
-            for i = 1:n
-                eATi = eAT(:, i);
-                rhs = -eATi * eATi.';
-                rhs(i, i) = rhs(i, i) + 1;
-                W{i}{1} = lyap(A, rhs);
-            end
-
-        case "adi"
-            error("implement later.");
-
-        otherwise
-            error("Unknown Method ""%s"".", wopts.Method);
+    for i = 1:n
+        bi = I(:, i);
+        W{i} = {gramian.finiteGramianVanLoan_(A, T, bi)};
     end
 
     Q = [];
