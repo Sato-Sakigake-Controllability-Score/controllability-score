@@ -22,7 +22,7 @@ function wlist = computeGramian(A, T, wopts, varargin)
 
         switch wopts.Method
             case "lyap"
-                wlist = gramian.finTargetLyap_(A, T, targetNodes, wopts);
+                wlist = gramian.finTargetVanLoan_(A, T, targetNodes, wopts);
             case "integral"
                 wlist = gramian.finTargetIntegral_(A, T, targetNodes, wopts);
             otherwise
@@ -55,7 +55,7 @@ function wlist = computeGramian(A, T, wopts, varargin)
             if wopts.UseScaling
                 wlist = gramian.finLyapScale_(A, T, wopts);
             else
-                wlist = gramian.finLyapNoscale_(A, T, wopts);
+                wlist = gramian.finVanLoanNoscale_(A, T, wopts);
             end
 
         case "integral"

@@ -1,15 +1,16 @@
-function wlist = finTargetLyap_(A, T, targetNodes, wopts)
-    eAT = expm(T * A);
+function wlist = finTargetVanLoan_(A, T, targetNodes, wopts)
+    n = size(A, 1);
     m = numel(targetNodes);
 
     W = cell(m, 1);
 
     for i = 1:m
         idx = targetNodes(i);
-        rhs = -eAT(:, idx) * eAT(:, idx).';
-        rhs(idx, idx) = rhs(idx, idx) + 1;
 
-        Xi = lyap(A, rhs);
+        bi = zeros(n, 1, 'like', A);
+        bi(idx) = 1;
+        Xi = gramian.finiteGramianVanLoan_(A, T, bi);
+
         W{i} = {Xi(targetNodes, targetNodes)};
     end
 

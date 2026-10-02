@@ -9,6 +9,11 @@ classdef WOptions
     %
     %   WOptions properties:
     %       Method     - "lyap" or "integral" (default: "lyap")
+    %                      "lyap" selects a direct method: finite-horizon
+    %                      Gramians use a Van Loan block matrix exponential
+    %                      (combined with Lyapunov equations when scaling is
+    %                      enabled), while infinite-horizon Gramians use
+    %                      Lyapunov equations. "integral" uses quadrature.
     %       Steps      - Nonnegative integer (default: 50)
     %                      Effective only when Method="integral".
     %                      When Method="lyap", accessing Steps returns 0.
@@ -32,7 +37,7 @@ classdef WOptions
 
     %% Properties (Dependent)
     properties (Dependent)
-        % Method Integration/solution method for W computation.
+        % Method Direct or numerical-integration method for W computation.
         % Allowed: "lyap" or "integral"
         Method
 

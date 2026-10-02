@@ -4,7 +4,7 @@ function wlist = finLyapScale_(A, T, wopts)
     [blocks, blockSizes, ~, Q, Qinv] = gramian.blockDiagonalization_(A, wopts);
 
     if isempty(Q)
-        wlist = gramian.finLyapNoscale_(A, T, wopts);
+        wlist = gramian.finVanLoanNoscale_(A, T, wopts);
         return
     end
 
