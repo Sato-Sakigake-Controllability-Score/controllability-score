@@ -28,7 +28,11 @@ function W = finiteGramianVanLoan_(A, T, b)
     % [ exp(-A*T), F         ]
     % [ 0,         exp(A.'*T)]
     %
-    % and W = exp(A*T) * F.
+    % where
+    %
+    % F = integral_0^T exp(-A*(T-t)) * (b*b.') * exp(A.'*t) dt.
+    %
+    % Therefore, W = exp(A*T) * F is the required Gramian.
 
     F = EM(1:n, n + 1:2 * n);
     eAT = EM(n + 1:2 * n, n + 1:2 * n).';
@@ -41,8 +45,8 @@ function W = finiteGramianVanLoan_(A, T, b)
     % Do not silently pass overflow or NaN to the optimizer.
     if any(~isfinite(W), "all")
         error("gramian:FiniteHorizonOverflow", ...
-              ["The finite-horizon Gramian contains Inf or NaN. " ...
-               "The matrix exponential may have overflowed."]);
+              "The finite-horizon Gramian contains Inf or NaN. " + ...
+              "The matrix exponential may have overflowed.");
     end
 
 end

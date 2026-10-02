@@ -132,6 +132,7 @@ After generating a `CSProblem` object, VCS and AECS are computed by `CSProblem.s
     - Type: string or char vector
     - Constraint: "lyap" or "integral"
     - Default: "lyap"
+    - `"lyap"` selects direct computation: finite horizons use the Van Loan method (combined with Lyapunov equations when scaling is enabled), while infinite horizons use Lyapunov equations. `"integral"` uses numerical quadrature.
   - `Steps`: number of grid points (for numerical integration)
     - Type: double
     - Constraint: integer, $` \geq0 `$ 
@@ -352,6 +353,7 @@ After computing $`W_1,\ldots,W_n`$, they are stored in a `WList` object, and the
     - Type: string or char vector
     - Constraint: "lyap" or "integral"
     - Default: "lyap"
+    - `"lyap"` selects direct computation: finite horizons use the Van Loan method (combined with Lyapunov equations when scaling is enabled), while infinite horizons use Lyapunov equations. `"integral"` uses numerical quadrature.
   - `Steps`: number of grid points (for numerical integration)
     - Type: double
     - Constraint: integer, $`\geq 0`$ 
@@ -657,8 +659,8 @@ Implements computation of the controllability Gramian.
     - Type: WList scalar
 ---
 - Algorithm:
-  - When `targetNodes` is empty, depending on the values of `T`, `wopts.UseScaling`, and `wopts.Method`, calls one of `gramian.infLyapScale_`, `gramian.infLyapNoscale_`, `gramian.finLyapScale_`, `gramian.finLyapNoscale_`, `gramian.finIntegralScale_`, or `gramian.finIntegralNoscale_` and computes a WList object.
-  - When `targetNodes` is nonempty, depending on `wopts.Method`, calls either `gramian.finTargetLyap_` or `gramian.finTargetIntegral_`. Since the case $`T=\infty`$ has not yet been formulated theoretically, it results in an error.
+  - When `targetNodes` is empty, depending on the values of `T`, `wopts.UseScaling`, and `wopts.Method`, calls one of `gramian.infLyapScale_`, `gramian.infLyapNoscale_`, `gramian.finLyapScale_`, `gramian.finVanLoanNoscale_`, `gramian.finIntegralScale_`, or `gramian.finIntegralNoscale_` and computes a WList object.
+  - When `targetNodes` is nonempty, depending on `wopts.Method`, calls either `gramian.finTargetVanLoan_` or `gramian.finTargetIntegral_`. Since the case $`T=\infty`$ has not yet been formulated theoretically, it results in an error.
 
 #### 4.9.2 Main Function `gramian.blockDiagonalization_`
 Finds the block diagonalization of the given matrix $`A`$ and its transformation matrix.
@@ -709,14 +711,11 @@ AW_i+W_iA+e_ie_i^\top=0
 ##### `gramian.finLyapScale_`
 For $`T<\infty`$, computes using the Lyapunov equation and van Loan (1978). (with scaling)
 
-##### `gramian.finLyapNoscale_`
-For $`T<\infty`$, computes using the Lyapunov equation
+##### `gramian.finVanLoanNoscale_`
+For $`T<\infty`$, computes using the Van Loan block matrix exponential method. (without scaling)
 
-```math
-AW_i+W_iA=e^{AT}e_ie_i^\top e^{A^\top T}-e_ie_i^\top
-```
-
-(without scaling)
+##### `gramian.finTargetVanLoan_`
+For $`T<\infty`$, computes the target-node variant using the Van Loan block matrix exponential method.
 
 ##### `gramian.finIntegralScale_`
 For $`T<\infty`$, computes using numerical integration. (with scaling)

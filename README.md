@@ -131,6 +131,7 @@ project/
     - 型　：string scalar or char vector
     - 制約："lyap" or "integral"
     - 既定："lyap"
+    - `"lyap"`は直接計算を選択する．有限時間ではVan Loan法（スケーリングありの場合はLyapunov方程式と併用），無限時間ではLyapunov方程式を用いる．`"integral"`は数値積分を用いる．
   - `Steps`：分点数（数値積分用）
     - 型　：double scalar
     - 制約：整数， $` \geq0 `$ 
@@ -351,6 +352,7 @@ W_i(T) = C \tilde W_{i}(T) C^\top
     - 型　：string scalar or char vector
     - 制約："lyap" or "integral"
     - 既定："lyap"
+    - `"lyap"`は直接計算を選択する．有限時間ではVan Loan法（スケーリングありの場合はLyapunov方程式と併用），無限時間ではLyapunov方程式を用いる．`"integral"`は数値積分を用いる．
   - `Steps`：分点数（数値積分用）
     - 型　：double scalar
     - 制約：整数， $`\geq 0`$ 
@@ -659,8 +661,8 @@ g(p)&=\mathrm{tr}\left(\widetilde{W}(p)^{-1}\right) \\
     - 型　：`WList` scalar
 ---
 - アルゴリズム：
-  - `targetNodes` が空のときは，`T`，`wopts.UseScaling`，`wopts.Method`の値に応じて，`gramian.infLyapScale_`，`gramian.infLyapNoscale_`，`gramian.finLyapScale_`，`gramian.finLyapNoscale_`，`gramian.finIntegralScale_`，`gramian.finIntegralNoscale_`のいずれかを呼び出し，`WList`オブジェクトを計算する．
-  - `targetNodes` が非空のときは，`wopts.Method` に応じて `gramian.finTargetLyap_`，`gramian.finTargetIntegral_` のいずれかを呼び出す．$`T=\infty`$の場合に関してはまだ理論的に定式化されていないため，エラーとする．
+  - `targetNodes` が空のときは，`T`，`wopts.UseScaling`，`wopts.Method`の値に応じて，`gramian.infLyapScale_`，`gramian.infLyapNoscale_`，`gramian.finLyapScale_`，`gramian.finVanLoanNoscale_`，`gramian.finIntegralScale_`，`gramian.finIntegralNoscale_`のいずれかを呼び出し，`WList`オブジェクトを計算する．
+  - `targetNodes` が非空のときは，`wopts.Method` に応じて `gramian.finTargetVanLoan_`，`gramian.finTargetIntegral_` のいずれかを呼び出す．$`T=\infty`$の場合に関してはまだ理論的に定式化されていないため，エラーとする．
 
 #### 4.9.2 主な関数 `gramian.blockDiagonalization_`
 与えられた行列 $`A`$ のブロック対角化とその変換行列を求める．
@@ -711,14 +713,11 @@ AW_i+W_iA+e_ie_i^\top=0
 ##### `gramian.finLyapScale_`
 $`T<\infty`$ において，Lyapunov方程式とvan Loan (1978)を用いて計算する．（スケーリングあり）
 
-##### `gramian.finLyapNoscale_`
-$`T<\infty`$ において，Lyapunov方程式
+##### `gramian.finVanLoanNoscale_`
+$`T<\infty`$ において，Van Loanのブロック行列指数法を用いて計算する．（スケーリングなし）
 
-```math
-AW_i+W_iA=e^{AT}e_ie_i^\top e^{A^\top T}-e_ie_i^\top
-```
-
-を用いて計算する．（スケーリングなし）
+##### `gramian.finTargetVanLoan_`
+$`T<\infty`$ のターゲットノード版を，Van Loanのブロック行列指数法を用いて計算する．
 
 ##### `gramian.finIntegralScale_`
 $`T<\infty`$ において，数値積分を用いて計算する．（スケーリングあり）
