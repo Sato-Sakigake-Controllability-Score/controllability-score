@@ -1,4 +1,4 @@
-function wlist = finTargetVanLoan_(A, T, targetNodes, wopts)
+function wlist = finTargetDirect_(A, T, targetNodes, wopts)
     n = size(A, 1);
     m = numel(targetNodes);
 

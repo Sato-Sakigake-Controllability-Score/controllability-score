@@ -130,9 +130,10 @@ After generating a `CSProblem` object, VCS and AECS are computed by `CSProblem.s
   ---
   - `Method`: computation method
     - Type: string or char vector
-    - Constraint: "lyap" or "integral"
-    - Default: "lyap"
-    - `"lyap"` selects direct computation: finite horizons use the Van Loan method (combined with Lyapunov equations when scaling is enabled), while infinite horizons use Lyapunov equations. `"integral"` uses numerical quadrature.
+    - Constraint: "direct" or "integral"
+    - Default: "direct"
+    - `"direct"` selects direct computation, as opposed to the numerical quadrature used by `"integral"`. Finite horizons use the Van Loan method (combined with Lyapunov equations when scaling is enabled), while infinite horizons use Lyapunov equations.
+    - `"lyap"` remains available for backward compatibility, but is deprecated and emits a warning before being treated as `"direct"`.
   - `Steps`: number of grid points (for numerical integration)
     - Type: double
     - Constraint: integer, $` \geq0 `$ 
@@ -351,9 +352,10 @@ After computing $`W_1,\ldots,W_n`$, they are stored in a `WList` object, and the
 - Properties:
   - `Method`: computation method
     - Type: string or char vector
-    - Constraint: "lyap" or "integral"
-    - Default: "lyap"
-    - `"lyap"` selects direct computation: finite horizons use the Van Loan method (combined with Lyapunov equations when scaling is enabled), while infinite horizons use Lyapunov equations. `"integral"` uses numerical quadrature.
+    - Constraint: "direct" or "integral"
+    - Default: "direct"
+    - `"direct"` selects direct computation, as opposed to the numerical quadrature used by `"integral"`. Finite horizons use the Van Loan method (combined with Lyapunov equations when scaling is enabled), while infinite horizons use Lyapunov equations.
+    - `"lyap"` remains available for backward compatibility, but is deprecated and emits a warning before being treated as `"direct"`.
   - `Steps`: number of grid points (for numerical integration)
     - Type: double
     - Constraint: integer, $`\geq 0`$ 
@@ -369,7 +371,7 @@ After computing $`W_1,\ldots,W_n`$, they are stored in a `WList` object, and the
 ---
 - Property dependencies:
   - `Method` and `Steps`
-    - When Method="lyap", calling WOptions.Steps returns $`0`$. (The original numerical value is retained internally.)
+    - When Method="direct", calling WOptions.Steps returns $`0`$. (The original numerical value is retained internally.)
     - An error occurs if `gramian.computeGramian` is executed with Method="integral" and Steps=0.
   - `UseScaling` and `EigTol`
     - When UseScaling=false, calling WOptions.EigTol returns $`0`$. (The original numerical value is retained internally.)
@@ -659,8 +661,8 @@ Implements computation of the controllability Gramian.
     - Type: WList scalar
 ---
 - Algorithm:
-  - When `targetNodes` is empty, depending on the values of `T`, `wopts.UseScaling`, and `wopts.Method`, calls one of `gramian.infLyapScale_`, `gramian.infLyapNoscale_`, `gramian.finLyapScale_`, `gramian.finVanLoanNoscale_`, `gramian.finIntegralScale_`, or `gramian.finIntegralNoscale_` and computes a WList object.
-  - When `targetNodes` is nonempty, depending on `wopts.Method`, calls either `gramian.finTargetVanLoan_` or `gramian.finTargetIntegral_`. Since the case $`T=\infty`$ has not yet been formulated theoretically, it results in an error.
+  - When `targetNodes` is empty, depending on the values of `T`, `wopts.UseScaling`, and `wopts.Method`, calls one of `gramian.infLyapScale_`, `gramian.infLyapNoscale_`, `gramian.finLyapScale_`, `gramian.finDirectNoscale_`, `gramian.finIntegralScale_`, or `gramian.finIntegralNoscale_` and computes a WList object.
+  - When `targetNodes` is nonempty, depending on `wopts.Method`, calls either `gramian.finTargetDirect_` or `gramian.finTargetIntegral_`. Since the case $`T=\infty`$ has not yet been formulated theoretically, it results in an error.
 
 #### 4.9.2 Main Function `gramian.blockDiagonalization_`
 Finds the block diagonalization of the given matrix $`A`$ and its transformation matrix.
@@ -711,10 +713,10 @@ AW_i+W_iA+e_ie_i^\top=0
 ##### `gramian.finLyapScale_`
 For $`T<\infty`$, computes using the Lyapunov equation and van Loan (1978). (with scaling)
 
-##### `gramian.finVanLoanNoscale_`
+##### `gramian.finDirectNoscale_`
 For $`T<\infty`$, computes using the Van Loan block matrix exponential method. (without scaling)
 
-##### `gramian.finTargetVanLoan_`
+##### `gramian.finTargetDirect_`
 For $`T<\infty`$, computes the target-node variant using the Van Loan block matrix exponential method.
 
 ##### `gramian.finIntegralScale_`

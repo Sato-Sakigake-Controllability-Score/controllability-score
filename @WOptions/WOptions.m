@@ -8,15 +8,15 @@ classdef WOptions
     %   any order.
     %
     %   WOptions properties:
-    %       Method     - "lyap" or "integral" (default: "lyap")
-    %                      "lyap" selects a direct method: finite-horizon
+    %       Method     - "direct" or "integral" (default: "direct")
+    %                      "direct" selects direct computation: finite-horizon
     %                      Gramians use a Van Loan block matrix exponential
     %                      (combined with Lyapunov equations when scaling is
     %                      enabled), while infinite-horizon Gramians use
     %                      Lyapunov equations. "integral" uses quadrature.
     %       Steps      - Nonnegative integer (default: 50)
     %                      Effective only when Method="integral".
-    %                      When Method="lyap", accessing Steps returns 0.
+    %                      When Method="direct", accessing Steps returns 0.
     %                      (Always stored internally.)
     %                      If Method changes back to "integral", the previously
     %                      stored value is used.
@@ -30,15 +30,17 @@ classdef WOptions
     %
     %   Notes:
     %     - Some properties become inactive depending on other settings
-    %       (Steps when Method="lyap", EigTol when UseScaling=false).
+    %       (Steps when Method="direct", EigTol when UseScaling=false).
     %     - Options are persistent: values are not discarded when temporarily
     %       inactive.
     %     - The returned property values reflect the active configuration.
+    %     - "lyap" is a deprecated alias for "direct". It is accepted with a
+    %       warning and stored as "direct".
 
     %% Properties (Dependent)
     properties (Dependent)
         % Method Direct or numerical-integration method for W computation.
-        % Allowed: "lyap" or "integral"
+        % Allowed: "direct" or "integral" (deprecated alias: "lyap")
         Method
 
         % Steps Number of subintervals for quadrature-based methods.
@@ -54,7 +56,7 @@ classdef WOptions
 
     %% Private properties
     properties (Access = private)
-        MethodInternal (1, 1) string = "lyap"
+        MethodInternal (1, 1) string = "direct"
         StepsInternal  (1, 1) double = 50
         UseScalingInternal (1, 1) logical = true
         EigTolInternal (1, 1) double = 1e-12
@@ -101,9 +103,15 @@ classdef WOptions
 
         function obj = set.Method(obj, value)
             value = string(value);
-            value = validatestring(value, ["lyap", "integral"], ...
+            value = validatestring(value, ["direct", "integral", "lyap"], ...
                                    'WOptions', 'Method');
             value = string(value);
+
+            if value == "lyap"
+                warning("WOptions:DeprecatedLyapMethod", ...
+                        'WOptions.Method="lyap" is deprecated. Use Method="direct" instead.');
+                value = "direct";
+            end
 
             obj.MethodInternal = value;
         end
@@ -160,9 +168,9 @@ classdef WOptions
         function validateWOptions_(obj)
             % ---- Method ----
             m = obj.Method;
-            if ~any(m == ["lyap", "integral"])
+            if ~any(m == ["direct", "integral"])
                 error("WOptions:InvalidMethod", ...
-                      'Method must be one of "lyap","integral".');
+                      'Method must be one of "direct","integral".');
             end
 
             % ---- Steps: active only for integral ----

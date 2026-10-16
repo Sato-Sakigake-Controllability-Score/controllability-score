@@ -10,7 +10,7 @@ function wlist = infLyapNoscale_(A, wopts)
     W = cell(n, 1);
 
     switch wopts.Method
-        case "lyap"
+        case "direct"
             for i = 1:n
                 Ei = zeros(n, n);
                 Ei(i, i) = 1;

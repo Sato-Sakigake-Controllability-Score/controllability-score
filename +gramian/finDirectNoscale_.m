@@ -1,5 +1,5 @@
-% +cscore/+gramian/finVanLoanNoscale_.m
-function wlist = finVanLoanNoscale_(A, T, wopts)
+% +cscore/+gramian/finDirectNoscale_.m
+function wlist = finDirectNoscale_(A, T, wopts)
     n = size(A, 1);
 
     W = cell(n, 1);

@@ -15,7 +15,7 @@ classdef TestFiniteGramianVanLoan < matlab.unittest.TestCase
         function computeGramianUsesVanLoanWithoutScaling(testCase)
             A = [0, 1; 1, 0];
             T = 0.7;
-            wopts = WOptions('Method', "lyap", 'UseScaling', false);
+            wopts = WOptions('Method', "direct", 'UseScaling', false);
 
             wlist = gramian.computeGramian(A, T, wopts);
 
@@ -27,7 +27,7 @@ classdef TestFiniteGramianVanLoan < matlab.unittest.TestCase
             A = sparse([0, 1; 1, 0]);
             T = 0.7;
             targetNodes = [1, 2];
-            wopts = WOptions('Method', "lyap", 'UseScaling', false);
+            wopts = WOptions('Method', "direct", 'UseScaling', false);
 
             wlist = gramian.computeGramian(A, T, wopts, targetNodes);
 

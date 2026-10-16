@@ -21,8 +21,8 @@ function wlist = computeGramian(A, T, wopts, varargin)
         end
 
         switch wopts.Method
-            case "lyap"
-                wlist = gramian.finTargetVanLoan_(A, T, targetNodes, wopts);
+            case "direct"
+                wlist = gramian.finTargetDirect_(A, T, targetNodes, wopts);
             case "integral"
                 wlist = gramian.finTargetIntegral_(A, T, targetNodes, wopts);
             otherwise
@@ -33,7 +33,7 @@ function wlist = computeGramian(A, T, wopts, varargin)
 
     if isinf(T)
         switch wopts.Method
-            case "lyap"
+            case "direct"
                 if wopts.UseScaling
                     wlist = gramian.infLyapScale_(A, wopts);
                 else
@@ -51,11 +51,11 @@ function wlist = computeGramian(A, T, wopts, varargin)
     end
 
     switch wopts.Method
-        case "lyap"
+        case "direct"
             if wopts.UseScaling
                 wlist = gramian.finLyapScale_(A, T, wopts);
             else
-                wlist = gramian.finVanLoanNoscale_(A, T, wopts);
+                wlist = gramian.finDirectNoscale_(A, T, wopts);
             end
 
         case "integral"
